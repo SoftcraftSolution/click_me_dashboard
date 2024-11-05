@@ -53,7 +53,7 @@ const ForgotPassword = () => {
             onChange={handleEmailChange}
             required
           />
-          <button type="submit" className="submit-btn">Continue</button>
+          <button type="submit" className="forgot-submit-btn">Continue</button>
         </form>
         
         {/* Display success message */}
