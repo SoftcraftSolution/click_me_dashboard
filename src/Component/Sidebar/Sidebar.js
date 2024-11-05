@@ -21,8 +21,8 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
   const [isUserListOpen, setIsUserListOpen] = useState(false);
   const [isNewsOpen, setIsNewsOpen] = useState(false);
   const [isSpotOpen, setIsSpotOpen] = useState(false);
-  const [isUpdatesOpen, setIsUpdatesOpen] = useState(false);
-  const [isFutureOpen, setIsFutureOpen] = useState(false);  // New state for Future Price
+  const [isEmployeeListOpen, setIsEmployeeListOpen] = useState(false);
+  const [isItemOpen, setIsItemOpen] = useState(false);  // New state for Future Price
 
   const toggleUserList = () => {
     setIsUserListOpen(!isUserListOpen);
@@ -34,9 +34,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
 
   return (
     <div className="sidebar">
-      <div className="logo">
-        <img src={logo} alt="Logo" />
-      </div>
+      <div className='sidebar-parent-logo' ><div className="sider-logo"></div></div>
 
       <ul className="sidebar-menu">
         <li>
@@ -48,17 +46,17 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             Dashboard
           </a>
         </li>
-
+{/* company list */}
         <li>
           <button
-            className={`menu-item ${activeIndex === 1 ? 'active' : 'inactive'}`}
+            className={`menu-item ${(activeIndex === 11 || activeIndex ===12) ? 'active' : 'inactive'}`}
             onClick={() => {
               toggleUserList();
-              onTabClick(1);
+              onTabClick(11);
             }}
           >
             <img src={userimg} alt="User List Icon" className="icon" />
-            <div>User List</div>
+            <div>Company</div>
             
             <img
               src={isUserListOpen ? upArrow : downArrow}
@@ -73,7 +71,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
                   className={`submenu-item ${activeIndex === 11 ? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(11)}
                 >
-                  Free Trial
+                  Company List
                 </Link>
               </li>
               <li>
@@ -81,101 +79,79 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
                   className={`submenu-item ${activeIndex === 12 ? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(12)}
                 >
-                  Expired Trial
+                  Add New Company
                 </Link>
               </li>
-              <li>
-                <Link
-                  className={`submenu-item ${activeIndex === 13 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(13)}
-                >
-                  Rejected Users
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`submenu-item ${activeIndex === 14 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(14)}
-                >
-                  Free Users
-                </Link>
-              </li>
+              
             </ul>
         </li>
-
+{/* employee list */}
         <li>
-          <Link
+          <button
             className={`menu-item ${activeIndex === 3 ? 'active' : 'inactive'}`}
-            onClick={() => onTabClick(3)}
+            onClick={() => {
+              setIsEmployeeListOpen(!isEmployeeListOpen);
+              onTabClick(3);
+            }}
           >
             <img src={verimg} alt="Verify Icon" className="icon" />
-            Verify User
-          </Link>
-        </li>
-
-        <li>
-          <button
-            className={`menu-item ${activeIndex === 16 ? 'active' : 'inactive'}`}
-            onClick={() => {
-              setIsUpdatesOpen(!isUpdatesOpen);
-              onTabClick(16);
-            }}
-          >
-            <img src={updateslogo} alt="Updates Icon" className="icon" />
-            Updates
+            Employee 
+            <img
+              src={isEmployeeListOpen? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
           </button>
-          <ul className={`submenu ${isUpdatesOpen ? 'submenu-open' : ''}`}>
+          <ul className={`submenu ${isEmployeeListOpen ? 'submenu-open' : ''}`}>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 18 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(18)}
+                  className={`submenu-item ${activeIndex === 3 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(3)}
                 >
-                  Add Update
+                 Employee List
                 </Link>
               </li>
             </ul>
         </li>
-        
+{/* item secttionn */}
         <li>
           <button
-            className={`menu-item ${activeIndex === 44 ? 'active' : 'inactive'}`}
+            className={`menu-item ${(activeIndex === 4 || activeIndex === 5) ? 'active' : 'inactive'}`}
             onClick={() => {
-              setIsFutureOpen(!isFutureOpen); // Toggle future state
-              onTabClick(16);
+              setIsItemOpen(!isItemOpen); // Toggle future state
+              onTabClick(4);
             }}
           >
-            <img src={futurelogo} alt="Future Price Icon" className="icon" />
-            Future Price
+            <img src={updateslogo} alt="Future Price Icon" className="icon" />
+            Item
+            <img
+              src={isItemOpen? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
           </button>
-          <ul className={`submenu ${isFutureOpen ? 'submenu-open' : ''}`}>
+          <ul className={`submenu ${isItemOpen ? 'submenu-open' : ''}`}>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 19 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(19)}
+                  className={`submenu-item ${activeIndex === 4 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(4)}
                 >
-                  Add Reference Rate (SBI)
+                  Item List
                 </Link>
               </li>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 20 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(20)}
+                  className={`submenu-item ${activeIndex === 5 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(5)}
                 >
-                  Add Warehouse Stock
+                  Add New Item
                 </Link>
               </li>
-              <li>
-                <Link
-                  className={`submenu-item ${activeIndex === 18 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(18)}
-                >
-                  Add Settlement
-                </Link>
-              </li>
+              
             </ul>
         </li>
 
-        <li>
+        {/* <li>
           <button
             className={`menu-item ${activeIndex === 4 ? 'active' : 'inactive'}`}
             onClick={() => {
@@ -204,7 +180,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
                 </Link>
               </li>
             </ul>
-        </li>
+        </li> */}
 
         <li>
           <button

@@ -7,7 +7,7 @@ import DashboardPage from './Component/UserList/UserList';
 import Login from './Component/Login/login';
 import OtpPage from './Component/EnterOTP/enterotp';
 import VerifyUsers from './Component/VerifyUsers/verifyuser';
-import FreeTrial from './Component/FreeTrial/freetrial';
+import CompanyList from './Component/companylist/companylist';
 import ExpiredTrial from './Component/ExpiredTrail/expiredtrial';
 import RejectedUser from './Component/RejectedUser/rejecteduser';
 import SelfNews from './Component/SelfNews/selfnews';
@@ -33,7 +33,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/enterotp" element={<OtpPage />} />
             <Route path="/verifyuser" element={<VerifyUsers />} />
-            <Route path="/freetrial" element={<FreeTrial />} />
+            <Route path="/freetrial" element={<CompanyList />} />
             <Route path="/expiredtrial" element={<ExpiredTrial />} />
             <Route path="/rejecteduser" element={<RejectedUser />} />
             <Route path="/selfnews" element={<SelfNews />} />

@@ -1,0 +1,75 @@
+/* addItem.css */
+
+.addItem-container {
+   
+    padding: 20px;
+}
+
+.addItem-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.addItem-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.addItem-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.addItem-radioGroup,
+.addItem-vegOptions {
+    display: flex;
+    gap: 10px;
+}
+
+.addItem-section {
+    width: 100%;
+}
+
+.addItem-dynamicInput {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.addItem-dynamicInput input {
+    flex: 1;
+}
+
+.addItem-fileUpload input {
+    padding: 8px;
+    margin-top: 10px;
+}
+
+.addItem-submitBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.addItem-successPopup {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+}

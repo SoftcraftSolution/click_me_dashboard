@@ -1,0 +1,76 @@
+/* employeeList.css */
+
+.employeeList-container {
+    margin: auto;
+
+    padding: 20px;
+    box-sizing: border-box;
+}
+.employeeList-tableContainer{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    /* height: 85vh; */
+  }
+
+.employeeList-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.employeeList-topBar {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.employeeList-searchInput,
+.employeeList-dateInput {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.employeeList-dateInput{
+    margin-left: 20px;
+}
+
+.employeeList-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.employeeList-table th, .employeeList-table td {
+    padding: 12px;
+    text-align: left;
+    background-color: transparent;
+    border-bottom: 1px solid #ddddddb6;
+}
+
+.employeeList-table th {
+    font-weight: 600;
+}
+
+.employeeList-table a {
+    color: blue;
+    text-decoration: underline;
+}
+
+.employeeList-actionIcons {
+    display: flex;
+    gap: 8px;
+}
+
+.employeeList-actionIcon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.employeeList-editBtn, .employeeList-deleteBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}

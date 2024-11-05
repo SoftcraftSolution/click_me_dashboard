@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MainDashboard from '../DashboardMain/maindashboard.js';
 import SpotPrice from '../SpotPrice/spotprice.js';
 import VerifyUsers from '../VerifyUsers/verifyuser.js';
-import FreeTrial from '../FreeTrial/freetrial.js';
+import CompanyList from '../companylist/companylist.js';
 import NewsPage from '../News/news.js';
 import ExpiredTrial from '../ExpiredTrail/expiredtrial.js';
 import RejectedUserTrial from '../RejectedUser/rejecteduser.js';
@@ -25,6 +25,10 @@ import AddLocation from '../AddLocation/AddLocation.js';
 import Feedback from '../Feedback/Feedback.js';
 import AddSBI from '../AddSBIREFERENCE/AddSbi.js';
 import WarehouseStockEditor from '../AddWarehouse/addwarehouse.js';
+import AddCompany from '../addCompany/addCompany.jsx';
+import EmployeeList from '../employee/employeelist.jsx';
+import ItemList from '../itemList/itemList.jsx';
+import AddItem from '../addItem/addItem.jsx';
 
 
 const Dashboard = () => {
@@ -38,16 +42,14 @@ const Dashboard = () => {
     switch (activeIndex) {
       case 0:
         return <MainDashboard />;
-      case 1:
-        return <UserListPage />;
       case 2:
-        return <FreeTrial />;
+        return <CompanyList />;
       case 3:
-        return <VerifyUsers />;
+        return <EmployeeList />;
       case 4:
-        return <SpotPrice />;
+        return <ItemList />;
       case 5:
-          return <AddSpotPrice />;  
+          return <AddItem />;  
       case 6:
         return <NewsPage />;
       case 7:
@@ -59,13 +61,13 @@ const Dashboard = () => {
       case 10:
         return <AddCircularNews/>;
       case 11:
-        return <FreeTrial />;
+        return <CompanyList />;
       case 12:
-        return <ExpiredTrial />;
-      case 13:
-        return <RejectedUserTrial />;
-      case 14:
-        return <FreeUser />;
+        return <AddCompany />;
+      // case 13:
+      //   return <RejectedUserTrial />;
+      // case 14:
+      //   return <FreeUser />;
        case 16:
             return <Updates />;
            case 17:
