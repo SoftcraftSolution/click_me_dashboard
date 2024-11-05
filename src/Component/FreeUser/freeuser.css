@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.page-wrapper {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-list-label {
+  text-align: left;
+
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+
+
+.user-list {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  
+}
+
+.user-list-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-list-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.user-list-header input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableheadingfont, .freeuserdata  {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: #696969;
+  white-space: nowrap;
+}
+
+table th {
+  background-color: #FFFFFF;
+  font-weight: 500;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table td .edit-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.premium-plan {
+  color: #BF1D91  ;
+}
+
+.standard-plan {
+  color: #1837BC;
+  ;
+}
+
+.basic-plan {
+  color: #FDA861;
+  ;
+}
+
+.basic-plan-expired {
+  color: #ff4500;
+}
+
+.freeuserlist-input{
+    font-family: 'Poppins', sans-serif;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 300px; 
+    background-color: #F2F4F8;
+
+}
+.freeuserlist-dateepicker{
+    font-family: 'Poppins', sans-serif;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #F2F4F8;
+  
+}
+
+.freeuser-buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+.freeuserdiv{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.tableheadingfont{
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  white-space: nowrap;
+}

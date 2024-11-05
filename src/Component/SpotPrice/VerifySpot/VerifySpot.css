@@ -1,0 +1,119 @@
+.spotverify-users {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .spotverifytitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .spotverifytable-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .table-controls input {
+    padding: 8px;
+    margin-right: 10px;
+  }
+  
+  .spotverifytable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .spotverifyheading, .spotverifydata{
+    padding: 10px;
+   
+    text-align: left;
+  }
+  
+ 
+   .spotverify-input
+  { font-family: 'Poppins', sans-serif;
+    padding: 4px 4px 4px 10px;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    width: 300px; 
+    background-color: #F2F4F8;}
+
+    .spotverifyheadingfunctions{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 30px;
+        padding-bottom: 10px;
+    }
+
+    .spotverifyheading{
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    /* VerifySpot.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  font-family: 'Poppins', sans-serif;
+  background: white;
+  padding: 20px;
+  width: 340px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 30px;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-cancel {
+  background-color: #FFFFFF;
+  border: 1px solid grey;
+  height: 40px;
+  width: 80px;
+}
+
+.modal-confirm {
+  background-color: #E76821;
+  color: white;
+  padding: 3px 30px;
+  border-radius: 8px;
+}
+
+.modal-title {
+  text-align: left;
+  font-weight: 600;
+  padding-bottom: 15px;
+  padding-top: 10px;
+}
+
+.modal-confirmation-message {
+  color: #696969;
+}

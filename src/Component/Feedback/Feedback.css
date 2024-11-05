@@ -1,0 +1,80 @@
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .feedback-page {
+    padding: 20px;
+    background-color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .filter-section {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .filter-section input[type="text"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 50%;
+  }
+  
+  .filter-section input[type="date"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  table th {
+    background-color: #f9f9f9;
+    font-weight: 500;
+  }
+  
+  .heart-filled {
+    color: red;
+    margin-right: 5px;
+  }
+  
+  .heart-empty {
+    color: #ddd;
+    margin-right: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    table {
+      font-size: 12px;
+    }
+  }
+  
+  .outer-layerfeedback{
+    padding: 20px;
+  }

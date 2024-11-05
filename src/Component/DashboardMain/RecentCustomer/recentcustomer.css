@@ -1,0 +1,68 @@
+.customer-table-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  flex:1
+}
+
+.recent-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  
+}
+
+.table-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.view-all {
+  color: #f8981d;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.customer-table {
+  width: 100%;
+}
+
+.customer-table-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 15px;
+
+  background-color: transparent;
+  font-weight: 500;
+  border-bottom: 1px solid #555;
+  color: #555;
+  
+}
+
+.customer-table-row {
+  /* background-color: #f9f9f9; */
+}
+
+.customer-table-cell {
+  /* flex: 1; */
+  text-align: left;
+  text-wrap: nowrap;
+  padding-right:10px;
+  /* border:1px solid red; */
+  width:auto
+}
+
+.premium-plan {
+  color: #b524f9; /* Purple color for Premium Plan */
+}
+
+.standard-plan {
+  color: #2962ff; /* Blue color for Standard Plan */
+}
+
+.basic-plan {
+  color: #f8981d; /* Orange color for Basic Plan */
+}

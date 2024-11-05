@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.updates-page {
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.stats {
+  display: flex;
+
+  margin-bottom: 20px;
+  width: 100%;
+  gap:33px;
+}
+
+.stat-box {
+  background-color: #f4f6fa;
+  padding: 15px;
+  text-align: center;
+  width: 60%;
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  border-radius: 18px;
+  background-color: #FFFFFF;
+}
+
+.stat-box h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.stat-box p {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  flex-grow: 2;
+  display: flex;
+  align-items: center;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  
+}
+
+.stat-share {
+  font-size: 14px;
+  color: #26b126;
+  padding-left: 10px;
+}
+
+.stat-box span {
+  font-size: 14px;
+  color: #888;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.updatessearch-and-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.updatessearch-bar {
+  font-family: 'Poppins', sans-serif;
+  padding: 8px 12px;
+  border: 0px solid #ccc;
+  border-radius: 10px;
+  width: 300px; 
+  background-color: #F2F4F8;
+}
+
+.updates-list , .updatestable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensure fixed layout for easier control over column sizes */
+}
+
+.updates-list th, .updates-list td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  white-space: normal;
+
+}
+
+.updates-list th {
+  background-color: #f4f6fa;
+  font-weight: bold;
+  white-space: normal;
+  background-color: #FFFFFF;
+}
+
+.updates-list th.content-column {
+  width: 30%; /* Adjust this percentage as needed to make the column narrower */
+}
+
+.updates-list td.content-column {
+  width: 30%; /* Make sure the data cells match the header width */
+}
+
+.updates-list a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+.updates-list a:hover {
+  text-decoration: underline;
+}
+
+.updates-list img {
+  width: 24px;
+  height: 24px;
+}
+
+#updates-datteePickeer input {
+  width: 150px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  color: gray;
+
+  
+}
+
+#updates-datteePickeer {
+  padding: 0 0 0 20px;
+}
+
+.updatestitle {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.updates-list{
+  
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+}
+.updates-header{
+  font-weight: 700;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
+.updates-close{
+
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  align-items: center;
+}
+
+.stat-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.stat-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.stat-box-1{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.news-img{
+  background-image: url('/src/assets/iconfornews.png');
+  border-radius: 15px;
+  background-repeat: no-repeat;
+  background-color: black;
+  background-position: center;
+  height: 50px;
+  width: 50px;
+}
+
+.newsfilter{
+  color: white;
+  border: none;
+  cursor: pointer;
+  background-color: #FFFFFF;
+  font-size: 14px;
+}
+
+.newstitle{
+  font-weight: 600;
+  font-size: 16px;
+  padding-top: 15px;
+}

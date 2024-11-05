@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+.userlisttable-container {
+ 
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFFFFF;
+  }
+  
+  .userlisttable {
+    width: 100%;
+    border-collapse: collapse;
+   
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .userlisthead, .userlistdata {
+    padding: 10px 10px 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .userlisthead {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .userlistdata {
+    color: #6c757d;
+    font-family: 'Poppins', sans-serif;
+  }
+  .usertablehead{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding:17px 10px 10px 15px;
+    gap: 25px;
+
+  }
+
+
+ .usertable-input{ font-family: 'Poppins', sans-serif;
+    padding: 8px 12px;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    width: 300px; 
+    background-color: #F2F4F8;}
+
+    #userlistdatteePickeer input {
+        width: 150px;
+        height: 30px;
+        padding: 5px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+        color: gray;
+    
+      }
+      
+      #userlistdatteePickeer {
+        padding: 0 0 0 20px;
+      }
+
+
+    
+      .visiting-card-image{
+        border-radius: 5px;
+        object-fit: contain;
+      }
+
+
+      .userlist-buttons{
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .userlist-action-btn{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+      
+
+      .userlist-action-img{
+        width: 20px;
+        height: 20px;
+      }
+
+      .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      
+      .popup-content {
+        position: relative;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      
+      .close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+      
+      .popup-image {
+        max-width: 100%;
+        height: 150px;
+      }
+      
+      .custom-popup-overlay {
+        font-family: 'Poppins', sans-serif;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      
+      .custom-popup-content {
+        font-family: 'Poppins', sans-serif;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      
+      .custom-close-popup {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      
+      /* Custom Popup Action Form */
+      .custom-action-popup h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      .custom-action-popup select,
+      .custom-action-popup input[type="radio"] {
+        margin-right: 10px;
+      }
+      
+      .custom-action-popup input[type="radio"] {
+        margin-right: 5px;
+      }
+      
+      .custom-action-popup label {
+        margin-right: 15px;
+        font-size: 14px;
+      }
+      
+      .custom-action-popup select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      .custom-continue-btn {
+        background-color:#FF0000;
+
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+      }
+      
+      .custom-continue-btn:hover {
+       
+      }
+
+      .custom-radioheading{
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .custom-options{
+        padding-bottom: 20px;
+      }
+
+      .delete-confirmation-buttons {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 20px;
+      }
+      
+      .custom-continue-btn {
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+        border: none;
+        background-color: #FF0000;
+        color: white;
+        border-radius: 5px;
+        width: 25%;
+      
+      }
+      .custom-no-btn{
+        padding: 10px 20px;
+        margin: 0 10px;
+        cursor: pointer;
+        border: none;
+        background-color: #FFFFFF;
+        color: black;
+        border-radius: 5px;
+        border: 1px solid grey;
+      }
+
+      .userdelete-headingpopup{
+        text-align: center;
+      }
+
+      .custom-popup-content-delete{
+        font-family: 'Poppins', sans-serif;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 300px;
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .custom-popup-contentimage{
+        
+      }
+
+      

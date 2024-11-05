@@ -1,0 +1,30 @@
+.notification-list-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  flex:1
+  /* max-width: 400px; */
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.notification-header h3 {
+  margin: 0;
+}
+
+.view-all-link {
+  color: #f97316;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.notification-list {
+  /* max-height: 300px; */
+  overflow-y: auto;
+}

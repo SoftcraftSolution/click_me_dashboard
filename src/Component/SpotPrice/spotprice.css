@@ -1,0 +1,12 @@
+.spot-price-container {
+  padding: 20px;
+}
+
+.spotpagemaintitle {
+  font-size: 24px;
+ font-weight: 700;
+}
+
+.verify-users-section, .price-list-section {
+  margin-top: 20px;
+}

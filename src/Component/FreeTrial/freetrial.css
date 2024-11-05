@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+.user-list-container {
+
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-list-header {
+    display: flex;
+    
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .user-list-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .user-list-header input[type="text"], 
+  .user-list-header input[type="date"] {
+    padding: 4px;
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+   
+    
+  }
+  
+  .user-list-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-list-table th, 
+  .user-list-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .user-list-table th {
+    background-color: #FFFFFF;
+    color: #333;
+  }
+  
+  .user-list-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .user-list-table .extend-btn {
+    font-family: 'Poppins', sans-serif;
+    padding: 8px 15px;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .user-list-table .upgrade-btn {
+    padding: 8px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .user-list-table .extend-btn:hover, 
+  .user-list-table .upgrade-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .datepick{
+    margin-left:-19px;
+  }
+
+  .freetrial-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .freetrial-input{
+    font-family: 'Poppins', sans-serif;
+    padding: 8px 12px;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    width: 300px; 
+    background-color: #F2F4F8;/* Fixed width for search input */
+  }
+
+  .freetrial-datepicker{
+    font-family: 'Poppins', sans-serif;
+    padding: 6px 12px;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    background-color: #F2F4F8;
+  }
+
+  .delete-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .delete-popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .delete-popup-content h3 {
+    margin-bottom: 10px;
+  }
+  
+  .popup-actions {
+    display: flex;
+    margin-top: 20px;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  
+  .popup-button {
+    padding: 10px 20px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #FFFFFF;
+  }
+  
+  .popup-button-confirm {
+    background-color: #FF0000;
+    color: white;
+  }
+  
+  .popup-button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Pagination styles */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  
+  .pagination button.active {
+    background-color: #666;
+    color: white;
+  }
+  
+  .pagination button:hover {
+    background-color: #ddd;
+  }

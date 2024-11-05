@@ -1,0 +1,72 @@
+.spotpricelist-list {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .spotpricetitle{
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .spotpricelisttable-controls{
+    display: flex;
+
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .spotpricelistinput {
+    padding: 8px;
+    margin-right: 10px;
+  }
+  
+  .spotpricelisttable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .spotpricelistheading, .spotpricelistdata {
+    padding: 10px;
+   
+    text-align: left;
+  }
+  
+  .spotpricelist-input
+  { font-family: 'Poppins', sans-serif;
+    padding: 4px 4px 4px 10px;
+    border: 0px solid #FFFFFF;
+    border-radius: 10px;
+    width: 300px; 
+    background-color: #F2F4F8;}
+
+    .spotpricelisttablefunctions{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #FFFFFF;
+        gap:40px;
+        padding-bottom:10px;
+    }
+
+    #spotpricelistpicker input {
+        background-color: #F2F4F8;
+        width: 150px;
+        height: 30px;
+        padding: 5px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+        color: gray;
+    
+      }
+      
+      #spotpricelistpicker {
+        padding: 0 0 0 20px;
+      }
+
+      .spotpricelistheading{
+        border-bottom: 1px solid #e0e0e0;
+      }
