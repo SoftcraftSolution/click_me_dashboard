@@ -1,3 +1,4 @@
+// AddItem.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import './addItem.css';
@@ -11,6 +12,7 @@ const AddItem = () => {
     const [ingredients, setIngredients] = useState(['']);
     const [nutritionalInfo, setNutritionalInfo] = useState(['']);
     const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null); // New state for image preview
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const handleIngredientChange = (index, value) => {
@@ -31,7 +33,11 @@ const AddItem = () => {
     const addNutritionalInfo = () => setNutritionalInfo([...nutritionalInfo, '']);
     const removeNutritionalInfo = (index) => setNutritionalInfo(nutritionalInfo.filter((_, i) => i !== index));
 
-    const handleImageChange = (e) => setImage(e.target.files[0]);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+        setImagePreview(URL.createObjectURL(file)); // Set image preview
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,7 +46,7 @@ const AddItem = () => {
         formData.append('itemName', itemName);
         formData.append('category', category);
         formData.append('price', price);
-        formData.append('isVeg', isVeg);
+        formData.append('isVeg', String(isVeg));
         formData.append('description', description);
         formData.append('ingredients', JSON.stringify(ingredients));
         formData.append('nutritionalInfo', JSON.stringify(nutritionalInfo));
@@ -64,6 +70,7 @@ const AddItem = () => {
             setIngredients(['']);
             setNutritionalInfo(['']);
             setImage(null);
+            setImagePreview(null); // Clear image preview
         } catch (error) {
             console.error('Error adding item:', error);
         }
@@ -73,75 +80,84 @@ const AddItem = () => {
         <div className="addItem-container">
             <div className="addItem-title">Add Item</div>
             <form className="addItem-form" onSubmit={handleSubmit}>
-                <input 
-                    className="addItem-input" 
-                    type="text" 
-                    placeholder="Item Name" 
-                    value={itemName} 
-                    onChange={(e) => setItemName(e.target.value)} 
-                />
-                
-                <div className="addItem-radioGroup">
-                    <label><input type="radio" value="Entrée" checked={category === 'Entrée'} onChange={(e) => setCategory(e.target.value)} /> Entrée</label>
-                    <label><input type="radio" value="Plat" checked={category === 'Plat'} onChange={(e) => setCategory(e.target.value)} /> Plat</label>
-                    <label><input type="radio" value="Dessert" checked={category === 'Dessert'} onChange={(e) => setCategory(e.target.value)} /> Dessert</label>
+                <div className="addItem-column">
+                    <input 
+                        className="addItem-input" 
+                        type="text" 
+                        placeholder="Item Name" 
+                        value={itemName} 
+                        onChange={(e) => setItemName(e.target.value)} 
+                    />
+
+                    <div className="addItem-radioGroup">
+                        <label><input type="radio" value="Entrée" checked={category === 'Entrée'} onChange={(e) => setCategory(e.target.value)} /> Entrée</label>
+                        <label><input type="radio" value="Plat" checked={category === 'Plat'} onChange={(e) => setCategory(e.target.value)} /> Plat</label>
+                        <label><input type="radio" value="Dessert" checked={category === 'Dessert'} onChange={(e) => setCategory(e.target.value)} /> Dessert</label>
+                    </div>
+
+                    <input 
+                        className="addItem-input" 
+                        type="number" 
+                        placeholder="Price" 
+                        value={price} 
+                        onChange={(e) => setPrice(e.target.value)} 
+                    />
+
+                    <textarea 
+                        className="addItem-input addItem-textarea" 
+                        placeholder="Item Description" 
+                        value={description} 
+                        onChange={(e) => setDescription(e.target.value)} 
+                    />
                 </div>
 
-                <input 
-                    className="addItem-input" 
-                    type="number" 
-                    placeholder="Price" 
-                    value={price} 
-                    onChange={(e) => setPrice(e.target.value)} 
-                />
+                <div className="addItem-column">
+                    <div className="addItem-vegOptions">
+                        <label><input type="radio" value="true" checked={isVeg === true} onChange={() => setIsVeg(true)} /> Veg</label>
+                        <label><input type="radio" value="false" checked={isVeg === false} onChange={() => setIsVeg(false)} /> Non Veg</label>
+                    </div>
 
-                <textarea 
-                    className="addItem-input" 
-                    placeholder="Item Description" 
-                    value={description} 
-                    onChange={(e) => setDescription(e.target.value)} 
-                />
+                    <div className="addItem-section">
+                        {/* <label>Ingredients</label><br></br> */}
+                        {ingredients.map((ingredient, index) => (
+                            <div key={index} className="addItem-dynamicInput">
+                                <input 
+                                    type="text" 
+                                    placeholder={`${index + 1}. Ingredient`} 
+                                    value={ingredient} 
+                                    onChange={(e) => handleIngredientChange(index, e.target.value)} 
+                                />
+                                {ingredients.length > 1 && <button type="button" onClick={() => removeIngredient(index)}>-</button>}
+                            </div>
+                        ))}
+                        <button type="button" onClick={addIngredient}>+</button>
+                    </div>
 
-                <div className="addItem-vegOptions">
-                    <label><input type="radio" value="true" checked={isVeg === true} onChange={() => setIsVeg(true)} /> Veg</label>
-                    <label><input type="radio" value="false" checked={isVeg === false} onChange={() => setIsVeg(false)} /> Non Veg</label>
-                </div>
+                    <div className="addItem-section">
+                        {/* <label>Nutritional Information</label><br></br> */}
+                        {nutritionalInfo.map((info, index) => (
+                            <div key={index} className="addItem-dynamicInput">
+                                <input 
+                                    type="text" 
+                                    placeholder={`${index + 1}. Nutritional Info`} 
+                                    value={info} 
+                                    onChange={(e) => handleNutritionalInfoChange(index, e.target.value)} 
+                                />
+                                {nutritionalInfo.length > 1 && <button type="button" onClick={() => removeNutritionalInfo(index)}>-</button>}
+                            </div>
+                        ))}
+                        <button type="button" onClick={addNutritionalInfo}>+</button>
+                    </div>
 
-                <div className="addItem-section">
-                    <label>Ingredients</label>
-                    {ingredients.map((ingredient, index) => (
-                        <div key={index} className="addItem-dynamicInput">
-                            <input 
-                                type="text" 
-                                placeholder={`${index + 1}. Ingredient`} 
-                                value={ingredient} 
-                                onChange={(e) => handleIngredientChange(index, e.target.value)} 
-                            />
-                            {ingredients.length > 1 && <button type="button" onClick={() => removeIngredient(index)}>-</button>}
-                        </div>
-                    ))}
-                    <button type="button" onClick={addIngredient}>+</button>
-                </div>
-
-                <div className="addItem-section">
-                    <label>Nutritional Information</label>
-                    {nutritionalInfo.map((info, index) => (
-                        <div key={index} className="addItem-dynamicInput">
-                            <input 
-                                type="text" 
-                                placeholder={`${index + 1}. Nutritional Info`} 
-                                value={info} 
-                                onChange={(e) => handleNutritionalInfoChange(index, e.target.value)} 
-                            />
-                            {nutritionalInfo.length > 1 && <button type="button" onClick={() => removeNutritionalInfo(index)}>-</button>}
-                        </div>
-                    ))}
-                    <button type="button" onClick={addNutritionalInfo}>+</button>
-                </div>
-
-                <div className="addItem-fileUpload">
-                    <label>Upload Image (optional)</label>
-                    <input type="file" onChange={handleImageChange} />
+                    <div className="addItem-fileUpload">
+                        <label>Upload Image (optional)</label><br></br>
+                        <input type="file" onChange={handleImageChange} />
+                        {imagePreview && (
+                            <div className="addItem-imagePreview">
+                                <img src={imagePreview} alt="Preview" />
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <button className="addItem-submitBtn" type="submit">Add Item</button>
