@@ -1,80 +1,96 @@
-
+/* feedbackList.css */
 
 body {
-    font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+.feedbackList-container {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.feedbackList-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.feedbackList-controls {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between; /* Align controls with space between */
+}
+
+.feedbackList-searchInput {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.feedbackList-filterSelect {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  min-width: 150px; /* Minimum width for the dropdown */
+}
+
+.feedbackList-tableContainer {
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.feedbackList-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.feedbackList-table th, .feedbackList-table td {
+  padding: 12px;
+  text-align: left;
+  background-color: transparent;
+  border-bottom: 1px solid #ddddddb6;
+}
+
+.feedbackList-table th {
+  font-weight: 600;
+}
+
+.feedbackList-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.feedbackList-table td:nth-child(4) {
+  max-width: 250px; /* Control description column width */
+}
+
+.feedbackList-stars {
+  color: #FFD700; /* Gold color for stars */
+  font-size: 16px; /* Adjust star size */
+}
+
+@media (max-width: 768px) {
+  .feedbackList-table th, .feedbackList-table td {
+      font-size: 14px;
   }
-  
-  .feedback-page {
-    padding: 20px;
-    background-color: #FFFFFF;
-    font-family: 'Poppins', sans-serif;
+
+  .feedbackList-table td:nth-child(4) {
+      max-width: 150px; /* Adjust description width for smaller screens */
   }
-  
-  h1 {
-    font-size: 24px;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
+
+  .feedbackList-controls {
+      flex-direction: column; /* Stack controls on smaller screens */
+      gap: 10px;
   }
-  
-  .filter-section {
-    display: flex;
-    margin-bottom: 20px;
-    align-items: center;
-    gap: 20px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .filter-section input[type="text"] {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 50%;
-  }
-  
-  .filter-section input[type="date"] {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  table th, table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-  }
-  
-  table th {
-    background-color: #f9f9f9;
-    font-weight: 500;
-  }
-  
-  .heart-filled {
-    color: red;
-    margin-right: 5px;
-  }
-  
-  .heart-empty {
-    color: #ddd;
-    margin-right: 5px;
-  }
-  
-  @media (max-width: 768px) {
-    table {
-      font-size: 12px;
-    }
-  }
-  
-  .outer-layerfeedback{
-    padding: 20px;
-  }
+}

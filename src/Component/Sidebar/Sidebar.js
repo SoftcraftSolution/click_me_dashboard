@@ -15,21 +15,23 @@ import updateslogo from '../../assets/updateslogo.png';
 import feed from '../../assets/feed.png';
 import logoutadmin from '../../assets/logoutadmin.png';
 import futurelogo from '../../assets/futurelogo.png';
+import { Feedback } from '@mui/icons-material';
 
 const Sidebar = ({ activeIndex, onTabClick }) => {
   const navigate = useNavigate();
   const [isUserListOpen, setIsUserListOpen] = useState(false);
-  const [isNewsOpen, setIsNewsOpen] = useState(false);
-  const [isSpotOpen, setIsSpotOpen] = useState(false);
+  const [isOrderOpen, setIsOrderOpen] = useState(false);
+  const [isPromotionOpen, setIsPromotionOpen] = useState(false);
   const [isEmployeeListOpen, setIsEmployeeListOpen] = useState(false);
+  const [isGamificationOpen, setIsGamificationOpen] = useState(false);
   const [isItemOpen, setIsItemOpen] = useState(false);  // New state for Future Price
 
   const toggleUserList = () => {
     setIsUserListOpen(!isUserListOpen);
   };
 
-  const toggleNewsList = () => {
-    setIsNewsOpen(!isNewsOpen);
+  const toggleOrderList = () => {
+    setIsOrderOpen(!isOrderOpen);
   };
 
   return (
@@ -113,7 +115,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               </li>
             </ul>
         </li>
-{/* item secttionn */}
+{/* item secttion */}
         <li>
           <button
             className={`menu-item ${(activeIndex === 4 || activeIndex === 5 || activeIndex === 6) ? 'active' : 'inactive'}`}
@@ -158,106 +160,157 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             </ul>
         </li>
 
-        {/* <li>
-          <button
-            className={`menu-item ${activeIndex === 4 ? 'active' : 'inactive'}`}
-            onClick={() => {
-              setIsSpotOpen(!isSpotOpen);
-              onTabClick(4);
-            }}
-          >
-            <img src={spot} alt="Spot Price Icon" className="icon" />
-            Spot Price
-          </button>
-          <ul className={`submenu ${isSpotOpen ? 'submenu-open' : ''}`}>
-              <li>
-                <Link
-                  className={`submenu-item ${activeIndex === 5 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(5)}
-                >
-                  Add Spot Price
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`submenu-item ${activeIndex === 8 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(8)}
-                >
-                  Add Location
-                </Link>
-              </li>
-            </ul>
-        </li> */}
+   {/* order list */}
 
         <li>
           <button
-            className={`menu-item ${activeIndex === 6 ? 'active' : 'inactive'}`}
+            className={`menu-item ${(activeIndex === 7 ||activeIndex === 8 )? 'active' : 'inactive'}`}
             onClick={() => {
-              toggleNewsList();
-              onTabClick(6);
+              toggleOrderList();
+              onTabClick(7);
             }}
           >
             <img src={newsimg} alt="News Icon" className="icon" />
-            News
+            Order
             <img
-              src={isNewsOpen ? upArrow : downArrow}
+              src={isOrderOpen ? upArrow : downArrow}
               alt="Toggle"
               className="news-icon"
             />
           </button>
-          <ul className={`submenu ${isNewsOpen ? 'submenu-open' : ''}`}>
+          <ul className={`submenu ${isOrderOpen ? 'submenu-open' : ''}`}>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 10 ? 'active' : 'inactive'}`}
+                  className={`submenu-item ${activeIndex === 7 ? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(7)}
                 >
-                  Add Self News
+                  Order List
                 </Link>
               </li>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 11 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(10)}
+                  className={`submenu-item ${activeIndex === 8? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(8)}
                 >
-                  Add Circular
+                  Order history
                 </Link>
               </li>
             </ul>
         </li>
+{/* payment */}
+        <li>
+          <button
+            className={`menu-item ${activeIndex === 9 ? 'active' : 'inactive'}`}
+            onClick={() => {
+              // toggleNewsList();
+              onTabClick(9);
+            }}
+          >
+            <img src={cash} alt="Logout Icon" className="icon" />
+           Payment
+          </button>
+        </li>
 
+{/* promotion */}
+
+        <li>
+          <button
+            className={`menu-item ${(activeIndex === 10 ||activeIndex === 13 )? 'active' : 'inactive'}`}
+            onClick={() => {
+              setIsPromotionOpen(!isPromotionOpen);
+              onTabClick(10);
+            }}
+          >
+            <img src={feed} alt="News Icon" className="icon" />
+            Promotion
+            <img
+              src={isPromotionOpen ? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
+          </button>
+          <ul className={`submenu ${isPromotionOpen ? 'submenu-open' : ''}`}>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 10 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(10)}
+                >
+                  Coupon List
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 13? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(13)}
+                >
+                  Generate Coupon
+                </Link>
+              </li>
+            </ul>
+        </li>
+      
+{/* Gamification */}
+
+<li>
+          <button
+            className={`menu-item ${(activeIndex === 14 ||activeIndex === 15 )? 'active' : 'inactive'}`}
+            onClick={() => {
+              setIsGamificationOpen(!isGamificationOpen);
+              onTabClick(14);
+            }}
+          >
+            <img src={futurelogo} alt="News Icon" className="icon" />
+            Gamification
+            <img
+              src={isGamificationOpen ? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
+          </button>
+          <ul className={`submenu ${isGamificationOpen ? 'submenu-open' : ''}`}>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 14 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(14)}
+                >
+                  Reward List
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 15? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(15)}
+                >
+                 Generate Reward
+                </Link>
+              </li>
+            </ul>
+        </li>
+{/* feed back */}
+
+        <li>
+          <Link
+            className={`menu-item ${activeIndex === 16 ? 'active' : 'inactive'}`}
+            onClick={() => onTabClick(16)}
+          >
+            <img src={feed} alt="Add Admin Icon" className="icon" />
+            Feedback
+          </Link>
+        </li>
+        {/* Banner */}
         <li>
           <Link
             className={`menu-item ${activeIndex === 17 ? 'active' : 'inactive'}`}
             onClick={() => onTabClick(17)}
           >
-            <img src={feed} alt="Feedback Icon" className="icon" />
-            Feedback
-          </Link>
-        </li>             
-
-        <li>
-          <Link
-            className={`menu-item ${activeIndex === 9 ? 'active' : 'inactive'}`}
-            onClick={() => onTabClick(9)}
-          >
-            <img src={add} alt="Add Admin Icon" className="icon" />
-            Add Admin
-          </Link>
-        </li>
-        
-        <li>
-          <Link
-            className={`menu-item ${activeIndex === 14 ? 'active' : 'inactive'}`}
-            onClick={() => onTabClick(14)}
-          >
             <img src={cash} alt="Subscription Icon" className="icon" />
-            Subscription
+            Banner
           </Link>
         </li>
-
+{/* logout */}
         <li>
           <button
-            className={`menu-item ${activeIndex === 15 ? 'active' : 'inactive'}`}
+            className={`menu-item ${activeIndex === 18 ? 'active' : 'inactive'}`}
             onClick={() => {
               if (window.confirm("Are you sure you want to log out?")) {
                 navigate('/LoginAdmin');

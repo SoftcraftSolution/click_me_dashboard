@@ -30,6 +30,9 @@ import EmployeeList from '../employee/employeelist.jsx';
 import ItemList from '../itemList/itemList.jsx';
 import AddItem from '../addItem/addItem.jsx';
 import AddSubcategory from '../addSubcategory/addSubcategory.jsx';
+import AddBanner from '../addBanner/addBanner.jsx';
+import PaymentList from '../payment/paymentList.jsx';
+import RewardList from '../rewardList/rewardList.jsx';
 
 
 const Dashboard = () => {
@@ -58,21 +61,23 @@ const Dashboard = () => {
       case 8:
         return <AddLocation/>;
       case 9:
-        return <AdminDashboard/>;
+        return <PaymentList/>;
       case 10:
         return <AddCircularNews/>;
       case 11:
         return <CompanyList />;
       case 12:
         return <AddCompany />;
+        case 14:
+          return <RewardList />;
       // case 13:
       //   return <RejectedUserTrial />;
       // case 14:
       //   return <FreeUser />;
        case 16:
-            return <Updates />;
+            return <Feedback />;
            case 17:
-              return <Feedback />;  
+              return <AddBanner />;  
               case 18:
                 return <AddUpdate />;   
                 case 19:
