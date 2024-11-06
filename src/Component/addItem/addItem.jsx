@@ -1,19 +1,33 @@
-// AddItem.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './addItem.css';
 
 const AddItem = () => {
     const [itemName, setItemName] = useState('');
-    const [category, setCategory] = useState('');
+    const [subcategory, setSubcategory] = useState('');
+    const [subcategories, setSubcategories] = useState([]); // Store subcategories from API
     const [price, setPrice] = useState('');
     const [isVeg, setIsVeg] = useState(true);
     const [description, setDescription] = useState('');
     const [ingredients, setIngredients] = useState(['']);
     const [nutritionalInfo, setNutritionalInfo] = useState(['']);
     const [image, setImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null); // New state for image preview
+    const [imagePreview, setImagePreview] = useState(null);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+    useEffect(() => {
+        // Fetch subcategories from the API
+        const fetchSubcategories = async () => {
+            try {
+                const response = await axios.get('https://clickmeal-backend.vercel.app/user/subcategory-list');
+                setSubcategories(response.data.data); // Set fetched subcategories
+            } catch (error) {
+                console.error('Error fetching subcategories:', error);
+            }
+        };
+
+        fetchSubcategories();
+    }, []);
 
     const handleIngredientChange = (index, value) => {
         const newIngredients = [...ingredients];
@@ -36,7 +50,7 @@ const AddItem = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         setImage(file);
-        setImagePreview(URL.createObjectURL(file)); // Set image preview
+        setImagePreview(URL.createObjectURL(file));
     };
 
     const handleSubmit = async (e) => {
@@ -44,7 +58,7 @@ const AddItem = () => {
 
         const formData = new FormData();
         formData.append('itemName', itemName);
-        formData.append('category', category);
+        formData.append('subcategory', subcategory); // Selected subcategory ID
         formData.append('price', price);
         formData.append('isVeg', String(isVeg));
         formData.append('description', description);
@@ -63,14 +77,14 @@ const AddItem = () => {
             
             // Reset the form
             setItemName('');
-            setCategory('');
+            setSubcategory('');
             setPrice('');
             setIsVeg(true);
             setDescription('');
             setIngredients(['']);
             setNutritionalInfo(['']);
             setImage(null);
-            setImagePreview(null); // Clear image preview
+            setImagePreview(null);
         } catch (error) {
             console.error('Error adding item:', error);
         }
@@ -89,11 +103,19 @@ const AddItem = () => {
                         onChange={(e) => setItemName(e.target.value)} 
                     />
 
-                    <div className="addItem-radioGroup">
-                        <label><input type="radio" value="Entrée" checked={category === 'Entrée'} onChange={(e) => setCategory(e.target.value)} /> Entrée</label>
-                        <label><input type="radio" value="Plat" checked={category === 'Plat'} onChange={(e) => setCategory(e.target.value)} /> Plat</label>
-                        <label><input type="radio" value="Dessert" checked={category === 'Dessert'} onChange={(e) => setCategory(e.target.value)} /> Dessert</label>
-                    </div>
+                    {/* Subcategory Dropdown */}
+                    <select 
+                        className="addItem-input" 
+                        value={subcategory} 
+                        onChange={(e) => setSubcategory(e.target.value)}
+                    >
+                        <option value="">Select Subcategory</option>
+                        {subcategories.map((sub) => (
+                            <option key={sub._id} value={sub._id}>
+                                {sub.name}
+                            </option>
+                        ))}
+                    </select>
 
                     <input 
                         className="addItem-input" 
@@ -118,7 +140,6 @@ const AddItem = () => {
                     </div>
 
                     <div className="addItem-section">
-                        {/* <label>Ingredients</label><br></br> */}
                         {ingredients.map((ingredient, index) => (
                             <div key={index} className="addItem-dynamicInput">
                                 <input 
@@ -134,7 +155,6 @@ const AddItem = () => {
                     </div>
 
                     <div className="addItem-section">
-                        {/* <label>Nutritional Information</label><br></br> */}
                         {nutritionalInfo.map((info, index) => (
                             <div key={index} className="addItem-dynamicInput">
                                 <input 
@@ -150,7 +170,7 @@ const AddItem = () => {
                     </div>
 
                     <div className="addItem-fileUpload">
-                        <label>Upload Image (optional)</label><br></br>
+                        <label>Upload Image (optional)</label>
                         <input type="file" onChange={handleImageChange} />
                         {imagePreview && (
                             <div className="addItem-imagePreview">

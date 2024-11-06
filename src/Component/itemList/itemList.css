@@ -48,9 +48,7 @@
     text-align: left;
     border-bottom: 1px solid #ddddddb6;
   }
-  td{
-    height: 70px;
-  }
+
   
   .itemList-table th {
     font-weight: 600;
@@ -91,6 +89,7 @@
     align-items: center; /* Center vertically */
     justify-content: center; /* Center horizontally */
     gap: 8px;
+    height: 87px;
   }
   
   .itemList-editBtn,
@@ -100,4 +99,9 @@
     cursor: pointer;
     padding: 0;
   }
+  td{
+    box-sizing: border-box;
+    min-height: 70px;
+  }
+ 
   

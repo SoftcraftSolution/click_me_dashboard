@@ -29,6 +29,7 @@ import AddCompany from '../addCompany/addCompany.jsx';
 import EmployeeList from '../employee/employeelist.jsx';
 import ItemList from '../itemList/itemList.jsx';
 import AddItem from '../addItem/addItem.jsx';
+import AddSubcategory from '../addSubcategory/addSubcategory.jsx';
 
 
 const Dashboard = () => {
@@ -51,7 +52,7 @@ const Dashboard = () => {
       case 5:
           return <AddItem />;  
       case 6:
-        return <NewsPage />;
+        return <AddSubcategory />;
       case 7:
         return <AddNews />;
       case 8:

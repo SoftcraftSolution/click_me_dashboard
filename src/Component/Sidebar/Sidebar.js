@@ -116,7 +116,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
 {/* item secttionn */}
         <li>
           <button
-            className={`menu-item ${(activeIndex === 4 || activeIndex === 5) ? 'active' : 'inactive'}`}
+            className={`menu-item ${(activeIndex === 4 || activeIndex === 5 || activeIndex === 6) ? 'active' : 'inactive'}`}
             onClick={() => {
               setIsItemOpen(!isItemOpen); // Toggle future state
               onTabClick(4);
@@ -147,7 +147,14 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
                   Add New Item
                 </Link>
               </li>
-              
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 6 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(6)}
+                >
+                  Add Sub Category
+                </Link>
+              </li>
             </ul>
         </li>
 

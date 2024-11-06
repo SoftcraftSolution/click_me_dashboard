@@ -60,7 +60,7 @@ function ItemList() {
                     item.description
                   )}
                 </td>
-                <td>{item.category.name}</td>
+                <td>{item.subcategory.categoryId.name}</td>
                 <td>₹{item.price}</td>
                 <td className={item.isVeg ? "veg" : "nonVeg"}>
                   {item.isVeg ? "Veg" : "Non Veg"}
