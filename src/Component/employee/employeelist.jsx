@@ -1,4 +1,3 @@
-// EmployeeList.js
 import './employeelist.css';
 import editIcon from '../../assets/edit.png';
 import deleteIcon from '../../assets/deleteimg.png';
@@ -7,6 +6,8 @@ import axios from 'axios';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterOrders, setFilterOrders] = useState('');
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -15,11 +16,11 @@ function EmployeeList() {
         if (response.data.message === "Users fetched successfully") {
           const fetchedEmployees = response.data.users.map((employee) => ({
             id: employee._id,
-            name: employee.fullName,
-            email: employee.email,
-            phone: employee.phoneNumber,
-            companyName: employee.companyName,
-            numberOfOrders: employee.numberOfOrders || 0, // Assuming `numberOfOrders` is part of the response; default to 0 if missing
+            name: employee.fullName || 'N/A', // Default to 'N/A' if null
+            email: employee.email || 'N/A',
+            phone: employee.phoneNumber || 'N/A',
+            companyName: employee.companyName || 'N/A', // Handle null case
+            numberOfOrders: employee.numberOfOrders || 0, // Default to 0 if missing
           }));
           setEmployees(fetchedEmployees);
         } else {
@@ -33,14 +34,44 @@ function EmployeeList() {
     fetchEmployees();
   }, []);
 
+  // Filter employees based on search term and filter criteria
+  const filteredEmployees = employees.filter((employee) => {
+    const matchesSearchTerm =
+      (employee.name && employee.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (employee.email && employee.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (employee.companyName && employee.companyName.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesOrderFilter = filterOrders
+      ? employee.numberOfOrders === parseInt(filterOrders, 10)
+      : true;
+
+    return matchesSearchTerm && matchesOrderFilter;
+  });
+
   return (
     <div className="employeeList-container">
       <div className="employeeList-heading">Employee List</div>
 
       <div className="employeeList-tableContainer">
         <div className="employeeList-topBar">
-          <input type="text" placeholder="Search.." className="employeeList-searchInput" />
-          <input type="date" className="employeeList-dateInput" />
+          <input
+            type="text"
+            placeholder="Search by name, email, or company..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="employeeList-searchInput"
+          />
+          <select
+            value={filterOrders}
+            onChange={(e) => setFilterOrders(e.target.value)}
+            className="employeeList-filterSelect"
+          >
+            <option value="">All Orders</option>
+            <option value="0">0 Orders</option>
+            <option value="1">1 Order</option>
+            <option value="5">5 Orders</option>
+            <option value="10">10+ Orders</option>
+          </select>
         </div>
 
         <table className="employeeList-table">
@@ -56,7 +87,7 @@ function EmployeeList() {
             </tr>
           </thead>
           <tbody>
-            {employees.map((employee) => (
+            {filteredEmployees.map((employee) => (
               <tr key={employee.id}>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>

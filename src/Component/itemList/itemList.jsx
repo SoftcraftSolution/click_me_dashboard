@@ -1,4 +1,3 @@
-// ItemList.js
 import './itemList.css';
 import editIcon from '../../assets/edit.png';
 import deleteIcon from '../../assets/deleteimg.png';
@@ -7,6 +6,8 @@ import axios from 'axios';
 
 function ItemList() {
   const [items, setItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState(''); // For filtering by type (Veg/Non Veg)
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -21,14 +22,35 @@ function ItemList() {
     fetchItems();
   }, []);
 
+  // Filtered items based on search and filter criteria
+  const filteredItems = items.filter((item) => {
+    const matchesSearch = item.itemName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = filterType ? (filterType === 'Veg' ? item.isVeg : !item.isVeg) : true;
+    return matchesSearch && matchesType;
+  });
+
   return (
     <div className="itemList-container">
       <div className="itemList-heading">Item List</div>
 
       <div className="itemList-tableContainer">
         <div className="itemList-topBar">
-          <input type="text" placeholder="Search.." className="itemList-searchInput" />
-          <input type="date" className="itemList-dateInput" />
+          <input
+            type="text"
+            placeholder="Search by item name..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="itemList-searchInput"
+          />
+          <select
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}
+            className="itemList-filterSelect"
+          >
+            <option value="">All Types</option>
+            <option value="Veg">Veg</option>
+            <option value="Non Veg">Non Veg</option>
+          </select>
         </div>
 
         <table className="itemList-table">
@@ -45,7 +67,7 @@ function ItemList() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
+            {filteredItems.map((item) => (
               <tr key={item._id}>
                 <td>{item.itemName}</td>
                 <td>
@@ -60,7 +82,7 @@ function ItemList() {
                     item.description
                   )}
                 </td>
-                <td>{item.subcategory.categoryId.name}</td>
+                <td>{item.subcategory?.categoryId?.name || 'N/A'}</td>
                 <td>₹{item.price}</td>
                 <td className={item.isVeg ? "veg" : "nonVeg"}>
                   {item.isVeg ? "Veg" : "Non Veg"}

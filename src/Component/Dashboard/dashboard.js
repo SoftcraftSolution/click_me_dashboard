@@ -33,6 +33,9 @@ import AddSubcategory from '../addSubcategory/addSubcategory.jsx';
 import AddBanner from '../addBanner/addBanner.jsx';
 import PaymentList from '../payment/paymentList.jsx';
 import RewardList from '../rewardList/rewardList.jsx';
+import AddReward from '../addReward/addReward.jsx';
+import CouponList from '../couponList/couponList.jsx';
+import CouponForm from '../couponForm/couponForm.jsx';
 
 
 const Dashboard = () => {
@@ -63,27 +66,25 @@ const Dashboard = () => {
       case 9:
         return <PaymentList/>;
       case 10:
-        return <AddCircularNews/>;
+        return <CouponList/>;
       case 11:
         return <CompanyList />;
       case 12:
         return <AddCompany />;
+        case 13:
+        return <CouponForm />;
         case 14:
           return <RewardList />;
-      // case 13:
-      //   return <RejectedUserTrial />;
+      case 15:
+        return <AddReward />;
+
       // case 14:
       //   return <FreeUser />;
        case 16:
             return <Feedback />;
-           case 17:
-              return <AddBanner />;  
-              case 18:
-                return <AddUpdate />;   
-                case 19:
-                  return <AddSBI />;
-                case 20:
-                  return <WarehouseStockEditor/>  
+      case 17:
+          return <AddBanner />;  
+             
       default:
         return null;
     }

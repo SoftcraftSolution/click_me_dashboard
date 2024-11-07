@@ -1,107 +1,84 @@
-/* itemlist.css */
-
 .itemList-container {
-    margin: auto;
-    padding: 20px;
-    box-sizing: border-box;
-  }
   
-  .itemList-tableContainer {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  }
-  
-  .itemList-heading {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .itemList-topBar {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  
-  .itemList-searchInput,
-  .itemList-dateInput {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .itemList-dateInput {
-    margin-left: 20px;
-  }
-  
-  .itemList-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .itemList-table th,
-  .itemList-table td {
-    /* padding: 12px; */
-    background-color: transparent;
-    text-align: left;
-    border-bottom: 1px solid #ddddddb6;
-  }
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  
-  .itemList-table th {
-    font-weight: 600;
-  }
-  
-  .itemList-table a {
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .itemList-itemImage {
-    width: 50px;
-    height: 50px;
-    border-radius: 4px;
-  }
-  
-  .veg {
-    color: green;
-    font-weight: bold;
-  }
-  .itemList-table td {
-    vertical-align: middle; /* Ensures alignment of all cells */
-  }
-  
-  .nonVeg {
-    color: red;
-    font-weight: bold;
-  }
-  
-  /* .itemList-actionIcons {
-    display: flex;
-    gap: 8px;
-  } */
-  
-  .itemList-actionIcons {
-    display: flex;
-    align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    gap: 8px;
-    height: 87px;
-  }
-  
-  .itemList-editBtn,
-  .itemList-deleteBtn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-  }
-  td{
-    box-sizing: border-box;
-    min-height: 70px;
-  }
- 
-  
+.itemList-tableContainer {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.itemList-heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.itemList-topBar {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.itemList-searchInput,
+.itemList-filterSelect {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.itemList-searchInput{
+  width: 100%;
+}
+
+.itemList-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.itemList-table th,
+.itemList-table td {
+  background-color: transparent;
+  text-align: left;
+  border-bottom: 1px solid #ddddddb6;
+  padding: 12px;
+}
+
+.itemList-table th {
+  font-weight: 600;
+}
+
+.itemList-itemImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+
+.veg {
+  color: green;
+  font-weight: bold;
+}
+
+.nonVeg {
+  color: red;
+  font-weight: bold;
+}
+
+.itemList-actionIcons {
+  display: flex;
+  height: 87px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.itemList-editBtn,
+.itemList-deleteBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}

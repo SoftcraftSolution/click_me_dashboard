@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.couponList-container {
+    padding: 20px;
+}
+
+.couponList-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.couponList-card {
+    padding: 15px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.couponList-searchFilter {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.couponList-searchInput,
+.couponList-dateInput {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.couponList-searchInput{
+    width: 100%;
+}
+.couponList-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.couponList-table th, .couponList-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eae6e6;
+    white-space: normal; /* Allow text wrapping */
+    word-wrap: break-word; /* Ensure long words break correctly */
+    max-width: 200px; /* Optional: control max-width to wrap text within the cell */
+}
+.couponList-table th {
+    font-weight: 600;
+}
+
+.couponList-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.couponList-action-img {
+    width: 20px;
+    height: 20px;
+}
+
+.couponList-editBtn,
+.couponList-deleteBtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.status-expired {
+    color: red;
+    font-weight: bold;
+}
