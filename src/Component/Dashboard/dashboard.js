@@ -36,6 +36,8 @@ import RewardList from '../rewardList/rewardList.jsx';
 import AddReward from '../addReward/addReward.jsx';
 import CouponList from '../couponList/couponList.jsx';
 import CouponForm from '../couponForm/couponForm.jsx';
+import AnalyticsPage from '../analyticsPage/analytics.jsx';
+import EnhancedAnalyticsPage from '../analyticsPage/analytics.jsx';
 
 
 const Dashboard = () => {
@@ -48,7 +50,7 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeIndex) {
       case 0:
-        return <MainDashboard />;
+        return <AnalyticsPage />;
       case 2:
         return <CompanyList />;
       case 3:
