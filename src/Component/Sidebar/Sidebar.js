@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Sidebar.css';
-import logo from '../../assets/logo.png';
+import Cookies from 'js-cookie';
+import company from '../../assets/company.png';
+import banner from '../../assets/banner.png';
 import homeimg from '../../assets/home.png';
 import userimg from '../../assets/user.png';
-import verimg from '../../assets/verify.png';
-import newsimg from '../../assets/news.png';
-import add from '../../assets/addadmin.png';
+import gamification from '../../assets/gamification.png';
+import promotion from '../../assets/promotion.png';
+import payment from '../../assets/payment.png';
 import downArrow from '../../assets/downarrow.png';
 import upArrow from '../../assets/uparrow.png';
 import cash from '../../assets/cash.png';
-import spot from '../../assets/spot.png';
-import updateslogo from '../../assets/updateslogo.png';
+import item from '../../assets/itemms.png';
+import order from '../../assets/order.png';
 import feed from '../../assets/feed.png';
 import logoutadmin from '../../assets/logoutadmin.png';
 import futurelogo from '../../assets/futurelogo.png';
+
 import { Feedback } from '@mui/icons-material';
 
 const Sidebar = ({ activeIndex, onTabClick }) => {
@@ -57,7 +60,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(11);
             }}
           >
-            <img src={userimg} alt="User List Icon" className="icon" />
+            <img src={company} alt="User List Icon" className="icon" />
             <div>Company</div>
             
             <img
@@ -96,7 +99,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(3);
             }}
           >
-            <img src={verimg} alt="Verify Icon" className="icon" />
+            <img src={userimg} alt="Verify Icon" className="icon" />
             Employee 
             <img
               src={isEmployeeListOpen? upArrow : downArrow}
@@ -124,7 +127,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(4);
             }}
           >
-            <img src={updateslogo} alt="Future Price Icon" className="icon" />
+            <img src={item} alt="Future Price Icon" className="icon" />
             Item
             <img
               src={isItemOpen? upArrow : downArrow}
@@ -170,7 +173,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(7);
             }}
           >
-            <img src={newsimg} alt="News Icon" className="icon" />
+            <img src={order} alt="News Icon" className="icon" />
             Order
             <img
               src={isOrderOpen ? upArrow : downArrow}
@@ -206,7 +209,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(9);
             }}
           >
-            <img src={cash} alt="Logout Icon" className="icon" />
+            <img src={payment} alt="Logout Icon" className="icon" />
            Payment
           </button>
         </li>
@@ -221,7 +224,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(10);
             }}
           >
-            <img src={feed} alt="News Icon" className="icon" />
+            <img src={promotion} alt="News Icon" className="icon" />
             Promotion
             <img
               src={isPromotionOpen ? upArrow : downArrow}
@@ -259,7 +262,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               onTabClick(14);
             }}
           >
-            <img src={futurelogo} alt="News Icon" className="icon" />
+            <img src={gamification} alt="News Icon" className="icon" />
             Gamification
             <img
               src={isGamificationOpen ? upArrow : downArrow}
@@ -303,7 +306,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             className={`menu-item ${activeIndex === 17 ? 'active' : 'inactive'}`}
             onClick={() => onTabClick(17)}
           >
-            <img src={cash} alt="Subscription Icon" className="icon" />
+            <img src={banner} alt="Subscription Icon" className="icon" />
             Banner
           </Link>
         </li>
@@ -313,7 +316,8 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             className={`menu-item ${activeIndex === 18 ? 'active' : 'inactive'}`}
             onClick={() => {
               if (window.confirm("Are you sure you want to log out?")) {
-                navigate('/LoginAdmin');
+                Cookies.remove('email'); // Clear the email cookie
+                navigate('/'); // Navigate to the login page
               }
             }}
           >

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import MainDashboard from '../DashboardMain/maindashboard.js';
 import SpotPrice from '../SpotPrice/spotprice.js';
 import VerifyUsers from '../VerifyUsers/verifyuser.js';
@@ -10,17 +12,9 @@ import Updates from '../Updates/Updates.js';
 import Sidebar from '../Sidebar/Sidebar.js';
 import Topbar from '../TopBar/topbar.js'; // Import the Topbar component
 import "./dashboard.css"; // Your CSS file for styling
-import UserList from '../UserList/UserList.js';
-import SelfNews from '../SelfNews/selfnews.js';
-import CashManagement from '../CashManagement/cashmanagement.js';
-import AdminDashboard from '../AddAdmin/addadmin.js';
-import CircularNews from '../AddCircular/addcircular.js';
-import FreeUser from '../FreeUser/freeuser.js';
-import UserListPage from '../UserList/UserList.js';
+
 import AddNews from '../SelfNews/selfnews.js';
-import AddCircularNews from '../AddCircular/addcircular.js';
-import AddSpotPrice from '../AddSpot/AddSpot.js';
-import AddUpdate from '../AddUpdate/AddUpdate.js';
+
 import AddLocation from '../AddLocation/AddLocation.js';
 import Feedback from '../Feedback/Feedback.js';
 import AddSBI from '../AddSBIREFERENCE/AddSbi.js';
@@ -39,9 +33,18 @@ import CouponForm from '../couponForm/couponForm.jsx';
 import AnalyticsPage from '../analyticsPage/analytics.jsx';
 import EnhancedAnalyticsPage from '../analyticsPage/analytics.jsx';
 
-
 const Dashboard = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if there's an email in cookies
+    const email = Cookies.get('email');
+    if (!email) {
+      // If no email found, navigate to login page
+      navigate('/')
+    }
+  }, [navigate]);
 
   const handleTabClick = (index) => {
     setActiveIndex(index);
@@ -51,42 +54,36 @@ const Dashboard = () => {
     switch (activeIndex) {
       case 0:
         return <AnalyticsPage />;
-      case 2:
-        return <CompanyList />;
       case 3:
         return <EmployeeList />;
       case 4:
         return <ItemList />;
       case 5:
-          return <AddItem />;  
+        return <AddItem />;
       case 6:
         return <AddSubcategory />;
       case 7:
         return <AddNews />;
       case 8:
-        return <AddLocation/>;
+        return <AddLocation />;
       case 9:
-        return <PaymentList/>;
+        return <PaymentList />;
       case 10:
-        return <CouponList/>;
+        return <CouponList />;
       case 11:
         return <CompanyList />;
       case 12:
         return <AddCompany />;
-        case 13:
+      case 13:
         return <CouponForm />;
-        case 14:
-          return <RewardList />;
+      case 14:
+        return <RewardList />;
       case 15:
         return <AddReward />;
-
-      // case 14:
-      //   return <FreeUser />;
-       case 16:
-            return <Feedback />;
+      case 16:
+        return <Feedback />;
       case 17:
-          return <AddBanner />;  
-             
+        return <AddBanner />;
       default:
         return null;
     }

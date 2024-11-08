@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './login.css';
 import logo from '../../assets/logo.png';
 
@@ -11,6 +12,14 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
   const navigate = useNavigate(); // React Router hook for navigation
+
+  useEffect(() => {
+    // Check if an email is already stored in cookies
+    const storedEmail = Cookies.get('email');
+    if (storedEmail) {
+      navigate('/dash'); // Navigate to dashboard if email exists
+    }
+  }, [navigate]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -30,22 +39,16 @@ function Login() {
     setError('');
 
     try {
-      const response = await axios.post('https://markethub-backend-ceka.onrender.com/admin/login', {
+      const response = await axios.post('https://clickmeal-backend.vercel.app/user/admin-login', {
         email: email,
         password: password,
       });
       
-      // Store the JWT token and email
-      const token = response.data.token;
-      if (keepSignedIn) {
-        localStorage.setItem('token', token);
-        localStorage.setItem('email', email); // Store email in localStorage
-      } else {
-        sessionStorage.setItem('token', token);
-        sessionStorage.setItem('email', email); // Store email in sessionStorage
-      }
+      // Store the email in cookies with an expiration based on "keep signed in"
+      const cookieOptions = keepSignedIn ? { expires: 7 } : {}; // Expire in 7 days if keep signed in
+      Cookies.set('email', email, cookieOptions);
 
-      navigate('/'); 
+      navigate('/dash'); // Navigate to the dashboard upon successful login
 
     } catch (error) {
       console.error('Error during login:', error.response?.data || error);
@@ -89,24 +92,7 @@ function Login() {
             {loading ? 'Logging in...' : 'Log In'}
           </button>
           {error && <p className="error">{error}</p>}
-          <div className="options">
-            <label>
-              <input
-                type="checkbox"
-                checked={keepSignedIn}
-                onChange={handleKeepSignedInChange}
-              />
-              Keep me signed in
-            </label>
-            {/* Forgot Password link that navigates to the Forgot Password page */}
-            <span 
-              className="forgot-password" 
-              onClick={handleForgotPasswordClick} 
-              style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
-            >
-              Forgot Password?
-            </span>
-          </div>
+          
         </form>
       </div>
     </div>

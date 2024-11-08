@@ -28,27 +28,10 @@ function App() {
     <Router>
 
           <Routes>
-            <Route path="/userlist" element={<DashboardPage />} />
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/enterotp" element={<OtpPage />} />
-            <Route path="/verifyuser" element={<VerifyUsers />} />
-            <Route path="/freetrial" element={<CompanyList />} />
-            <Route path="/expiredtrial" element={<ExpiredTrial />} />
-            <Route path="/rejecteduser" element={<RejectedUser />} />
-            <Route path="/selfnews" element={<SelfNews />} />
-            <Route path="/addcircular" element={<AddCircular />} />
-            <Route path="/spotprice" element={<SpotPrice />} />
-            <Route path="/forgot" element={<ForgotPassword />} />
-            <Route path="/new" element={<NewPassword />} />
-            <Route path="/sucess" element={<SuccessPage />} />
-            <Route path="/addadmin" element={<AdminDashboard />} />
-            <Route path="/main" element={<MainDashboard />} />
-            <Route path="/notification" element={<Notification />} />
-            <Route path= "/freeuser" element={<UserList/>} />
-            <Route path= "/addspot" element={<AddSpotPrice/>} />
-            {/* <Route path= "/test" element={<SidebarExample/>} /> */}
-            {/* Add more routes here as needed */}
+            {/* <Route path="/userlist" element={<DashboardPage />} /> */}
+            <Route path="/" element={<Login />} />
+            <Route path="/dash" element={<Dashboard />} />
+           
      
           </Routes>
 

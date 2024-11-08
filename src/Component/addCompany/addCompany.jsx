@@ -1,13 +1,12 @@
-// AddCompany.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import './addCompany.css';
 
-
 const AddCompany = () => {
     const [name, setName] = useState('');
     const [deliveryAddress, setDeliveryAddress] = useState('');
-    const [numberOfEmployees, setNumberOfEmployees] = useState('');
+    const [numberOfEmployees, setNumberOfEmployees] = useState("");
+    const [email, setEmail] = useState(''); // New state for email
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -16,7 +15,8 @@ const AddCompany = () => {
             const response = await axios.post('https://clickmeal-backend.vercel.app/user/add-company', {
                 name,
                 deliveryAddress,
-                numberOfEmployees,
+                numberOfEmployees:parseInt(numberOfEmployees),
+                email, // Added email field to API payload
             });
             console.log('Company added:', response.data);
             
@@ -27,6 +27,7 @@ const AddCompany = () => {
             setName('');
             setDeliveryAddress('');
             setNumberOfEmployees('');
+            setEmail(''); // Reset email field
             
             // Hide the popup after 3 seconds
             setTimeout(() => setShowSuccessPopup(false), 3000);
@@ -59,13 +60,20 @@ const AddCompany = () => {
                                     onChange={(e) => setDeliveryAddress(e.target.value)} 
                                 />
                             </div>
-                            <div>
+                            <div className="addCompany-formRow">
                                 <input 
                                     className='addCompany-input' 
                                     type="number" 
                                     placeholder="Number of Employees" 
                                     value={numberOfEmployees} 
                                     onChange={(e) => setNumberOfEmployees(e.target.value)} 
+                                />
+                                <input 
+                                    className='addCompany-input' 
+                                    type="email" 
+                                    placeholder="Email Address" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
                                 />
                             </div>   
                             <button className="addCompany-submitBtn" type="submit">Add Company</button>
