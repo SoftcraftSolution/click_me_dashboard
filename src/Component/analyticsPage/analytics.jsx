@@ -42,24 +42,30 @@ const AnalyticsPage = () => {
         <div className='main-dash-root'>
             <div id="dash-header">Dashboard</div>
             <div id="dash-first">
-                <div className="summary-card">
+                <div className="summary-card enhanced-summary-card orders-today-card">
                     <h4>Orders Today</h4>
                     <p>{data.numberOfOrdersToday}</p>
-                   
+                    <div className="summary-card-footer">
+                        <span className="summary-card-subtext">Compared to yesterday</span>
+                    </div>
                 </div>
-                <div className="summary-card">
+                <div className="summary-card enhanced-summary-card orders-week-card">
                     <h4>Orders This Week</h4>
                     <p>{data.numberOfOrdersThisWeek}</p>
-                    {/* <span>{data.numberOfOrdersThisWeek > 0 ? '-' : ''}{data.numberOfOrdersThisWeek * 0.048}% change</span> */}
+                    <div className="summary-card-footer">
+                        <span className="summary-card-subtext">Weekly overview</span>
+                    </div>
                 </div>
-                <div className="summary-card">
+                <div className="summary-card enhanced-summary-card orders-month-card">
                     <h4>Orders This Month</h4>
                     <p>{data.numberOfOrdersThisMonth}</p>
-                    {/* <span>+{data.numberOfOrdersThisMonth * 0.048}% growth</span> */}
+                    <div className="summary-card-footer">
+                        <span className="summary-card-subtext">Monthly insights</span>
+                    </div>
                 </div>
             </div>
             <div className='dash-total-recent'>
-                <div className="chart-container">
+                <div className="chart-container enhanced-revenue-chart">
                     <h3>Total Revenue (Weekly Breakdown)</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={data.weeklyRevenueBreakdown}>
@@ -68,40 +74,59 @@ const AnalyticsPage = () => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="totalRevenue" fill="#82ca9d" />
+                            <Bar dataKey="totalRevenue" fill="#845EC2" barSize={40} radius={[10, 10, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
+                    <div className="revenue-footer">
+                        <p>Total revenue from recent week breakdown</p>
+                    </div>
                 </div>
-                <div className="recent-orders">
+                <div className="recent-orders enhanced-recent-orders">
                     <h3>Recent Orders</h3>
-                    <table className="analytics-table">
-                        <thead>
-                            <tr>
-                                <th>Employee Name</th>
-                                <th>Email Address</th>
-                                <th>Phone Number</th>
-                                <th>Company Name</th>
-                                <th>Order Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.recentOrders.map((order, index) => (
-                                <tr key={index}>
-                                    <td>{order.employeeName}</td>
-                                    <td>{order.emailAddress}</td>
-                                    <td>{order.phoneNumber}</td>
-                                    <td>{order.companyName}</td>
-                                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="recent-orders-card-container">
+                        {data.recentOrders.length ? (
+                            <table className="analytics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Email Address</th>
+                                        <th>Phone Number</th>
+                                        <th>Company Name</th>
+                                        <th>Order Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.recentOrders.map((order, index) => (
+                                        <tr key={index}>
+                                            <td>{order.employeeName}</td>
+                                            <td>{order.emailAddress}</td>
+                                            <td>{order.phoneNumber}</td>
+                                            <td>{order.companyName}</td>
+                                            <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p>No recent orders available.</p>
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className='dash-bottom-row'>
-                <div className="summary-card">
+            <div className='dash-bottom-row dash-total-recent'>
+                <div className="enhanced-summary-card">
                     <h4>Total Companies & Employees</h4>
-                    <p>{data.totalCompanies} Companies / {data.totalEmployees} Employees</p>
+                    <div className="enhanced-summary-content">
+                        <div className="summary-block">
+                            <div className="summary-value">{data.totalCompanies}</div>
+                            <div className="summary-label">Companies</div>
+                        </div>
+                        <div className="divider"></div>
+                        <div className="summary-block">
+                            <div className="summary-value">{data.totalEmployees}</div>
+                            <div className="summary-label">Employees</div>
+                        </div>
+                    </div>
                 </div>
                 <div className="circular-card">
                     <h4>Average Review</h4>
@@ -121,7 +146,7 @@ const AnalyticsPage = () => {
                             </Pie>
                         </PieChart>
                     </ResponsiveContainer>
-                    <p>{data.averageReview} / 5 ({data.reviewCount} Reviews)</p>
+                    <div className="circular-card-text">{data.averageReview} / 5 ({data.reviewCount} Reviews)</div>
                 </div>
             </div>
         </div>
