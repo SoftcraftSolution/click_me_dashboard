@@ -32,6 +32,8 @@ import CouponList from '../couponList/couponList.jsx';
 import CouponForm from '../couponForm/couponForm.jsx';
 import AnalyticsPage from '../analyticsPage/analytics.jsx';
 import EnhancedAnalyticsPage from '../analyticsPage/analytics.jsx';
+import AddCustomizeItem from '../addCustmizeItem/addCustomizeItem.jsx';
+import CustomizeItemList from '../addCustmizeItem/listItem.jsx';
 
 const Dashboard = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -63,9 +65,9 @@ const Dashboard = () => {
       case 6:
         return <AddSubcategory />;
       case 7:
-        return <AddNews />;
+        return <AddCustomizeItem />;
       case 8:
-        return <AddLocation />;
+        return <CustomizeItemList />;
       case 9:
         return <PaymentList />;
       case 10:

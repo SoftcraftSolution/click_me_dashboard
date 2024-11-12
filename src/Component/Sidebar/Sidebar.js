@@ -23,7 +23,7 @@ import { Feedback } from '@mui/icons-material';
 const Sidebar = ({ activeIndex, onTabClick }) => {
   const navigate = useNavigate();
   const [isUserListOpen, setIsUserListOpen] = useState(false);
-  const [isOrderOpen, setIsOrderOpen] = useState(false);
+  const [isCustmizeItemOpen, setIsCustomizeItemOpen] = useState(false);
   const [isPromotionOpen, setIsPromotionOpen] = useState(false);
   const [isEmployeeListOpen, setIsEmployeeListOpen] = useState(false);
   const [isGamificationOpen, setIsGamificationOpen] = useState(false);
@@ -34,7 +34,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
   };
 
   const toggleOrderList = () => {
-    setIsOrderOpen(!isOrderOpen);
+    setIsCustomizeItemOpen(!isCustmizeItemOpen);
   };
 
   return (
@@ -174,20 +174,20 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             }}
           >
             <img src={order} alt="News Icon" className="icon" />
-            Order
+            Customize Item
             <img
-              src={isOrderOpen ? upArrow : downArrow}
+              src={isCustmizeItemOpen ? upArrow : downArrow}
               alt="Toggle"
               className="news-icon"
             />
           </button>
-          <ul className={`submenu ${isOrderOpen ? 'submenu-open' : ''}`}>
+          <ul className={`submenu ${isCustmizeItemOpen ? 'submenu-open' : ''}`}>
               <li>
                 <Link
                   className={`submenu-item ${activeIndex === 7 ? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(7)}
                 >
-                  Order List
+                  Add Customize Item
                 </Link>
               </li>
               <li>
@@ -195,7 +195,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
                   className={`submenu-item ${activeIndex === 8? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(8)}
                 >
-                  Order history
+                  Customize Item List
                 </Link>
               </li>
             </ul>
