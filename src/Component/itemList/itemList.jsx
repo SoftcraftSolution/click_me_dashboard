@@ -8,6 +8,8 @@ function ItemList() {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState(''); // For filtering by type (Veg/Non Veg)
+  const [deletePopup, setDeletePopup] = useState({ show: false, itemId: null });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -22,6 +24,23 @@ function ItemList() {
     fetchItems();
   }, []);
 
+  const handleDeleteItem = async (itemId) => {
+    try {
+      const response = await axios.delete(`https://clickmeal-backend.vercel.app/user/delete-item?id=${itemId}`);
+      if (response.data.message === "Menu item deleted successfully") {
+        setItems(items.filter((item) => item._id !== itemId));
+        setMessage('Item deleted successfully!');
+      } else {
+        setMessage('Failed to delete the item.');
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+      setDeletePopup({ show: false, itemId: null });
+      setTimeout(() => setMessage(''), 3000); // Clear the message after 3 seconds
+    }
+  };
+
   // Filtered items based on search and filter criteria
   const filteredItems = items.filter((item) => {
     const matchesSearch = item.itemName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -32,6 +51,8 @@ function ItemList() {
   return (
     <div className="itemList-container">
       <div className="itemList-heading">Item List</div>
+
+      {message && <div className="itemList-message">{message}</div>}
 
       <div className="itemList-tableContainer">
         <div className="itemList-topBar">
@@ -87,12 +108,15 @@ function ItemList() {
                 <td className={item.isVeg ? "veg" : "nonVeg"}>
                   {item.isVeg ? "Veg" : "Non Veg"}
                 </td>
-                <td>Global</td> {/* Assuming static value for Menu Type */}
+                <td>Global</td>
                 <td className="itemList-actionIcons">
                   <button className="itemList-editBtn">
                     <img src={editIcon} alt="Edit" className="itemList-actionIcon" />
                   </button>
-                  <button className="itemList-deleteBtn">
+                  <button
+                    className="itemList-deleteBtn"
+                    onClick={() => setDeletePopup({ show: true, itemId: item._id })}
+                  >
                     <img src={deleteIcon} alt="Delete" className="itemList-actionIcon" />
                   </button>
                 </td>
@@ -101,6 +125,22 @@ function ItemList() {
           </tbody>
         </table>
       </div>
+
+      {deletePopup.show && (
+        <div className="itemList-popup">
+          <div className="itemList-popupContent">
+            <p>Are you sure you want to delete this item?</p>
+            <div className="itemList-popupActions">
+              <button onClick={() => setDeletePopup({ show: false, itemId: null })}>
+                Cancel
+              </button>
+              <button onClick={() => handleDeleteItem(deletePopup.itemId)}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
