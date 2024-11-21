@@ -7,7 +7,9 @@ import axios from 'axios';
 function CustomizeItemList() {
   const [customItems, setCustomItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState(''); // For filtering by type (Veg/Non-Veg)
+  const [filterType, setFilterType] = useState('');
+  const [deletePopup, setDeletePopup] = useState({ show: false, itemId: null });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchCustomItems = async () => {
@@ -22,7 +24,23 @@ function CustomizeItemList() {
     fetchCustomItems();
   }, []);
 
-  // Filtered items based on search and filter criteria
+  const handleDeleteItem = async (itemId) => {
+    try {
+      const response = await axios.delete(`https://clickmeal-backend.vercel.app/user/delete-customize-meal?id=${itemId}`);
+      if (response.data.message === "Customize meal deleted successfully.") {
+        setCustomItems(customItems.filter((item) => item._id !== itemId));
+        setMessage('Customized meal deleted successfully!');
+      } else {
+        setMessage('Failed to delete the customized meal.');
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+      setDeletePopup({ show: false, itemId: null });
+      setTimeout(() => setMessage(''), 3000); // Clear the message after 3 seconds
+    }
+  };
+
   const filteredItems = customItems.filter((item) => {
     const matchesSearch = item.itemName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = filterType ? (filterType === 'Veg' ? item.isVeg : !item.isVeg) : true;
@@ -32,6 +50,8 @@ function CustomizeItemList() {
   return (
     <div className="itemList-container">
       <div className="itemList-heading">Customized Item List</div>
+
+      {message && <div className="itemList-message">{message}</div>}
 
       <div className="itemList-tableContainer">
         <div className="itemList-topBar">
@@ -69,7 +89,7 @@ function CustomizeItemList() {
           <tbody>
             {filteredItems.map((item) => (
               <tr key={item._id}>
-                <td>{item.companyId}</td> {/* Replace with company name if available */}
+                <td>{item.companyId || 'N/A'}</td>
                 <td>{item.itemName}</td>
                 <td>
                   <img src={item.image} alt={item.itemName} className="itemList-itemImage" />
@@ -92,7 +112,10 @@ function CustomizeItemList() {
                   <button className="itemList-editBtn">
                     <img src={editIcon} alt="Edit" className="itemList-actionIcon" />
                   </button>
-                  <button className="itemList-deleteBtn">
+                  <button
+                    className="itemList-deleteBtn"
+                    onClick={() => setDeletePopup({ show: true, itemId: item._id })}
+                  >
                     <img src={deleteIcon} alt="Delete" className="itemList-actionIcon" />
                   </button>
                 </td>
@@ -101,6 +124,22 @@ function CustomizeItemList() {
           </tbody>
         </table>
       </div>
+
+      {deletePopup.show && (
+        <div className="itemList-popup">
+          <div className="itemList-popupContent">
+            <p>Are you sure you want to delete this customized item?</p>
+            <div className="itemList-popupActions">
+              <button onClick={() => setDeletePopup({ show: false, itemId: null })}>
+                Cancel
+              </button>
+              <button onClick={() => handleDeleteItem(deletePopup.itemId)}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
