@@ -65,3 +65,53 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+.companyList-message {
+    margin-bottom: 15px;
+    color: green;
+    font-weight: bold;
+    text-align: center;
+}
+
+.companyList-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.companyList-popupContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.companyList-popupActions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.companyList-popupActions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.companyList-popupActions button:first-child {
+    background-color: #ccc;
+}
+
+.companyList-popupActions button:last-child {
+    background-color: red;
+    color: white;
+}
