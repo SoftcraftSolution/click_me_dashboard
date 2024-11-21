@@ -8,6 +8,8 @@ function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterOrders, setFilterOrders] = useState('');
+  const [deletePopup, setDeletePopup] = useState({ show: false, employeeId: null });
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -34,6 +36,23 @@ function EmployeeList() {
     fetchEmployees();
   }, []);
 
+  const handleDeleteEmployee = async (employeeId) => {
+    try {
+      const response = await axios.delete(`https://clickmeal-backend.vercel.app/user/delete-user?id=${employeeId}`);
+      if (response.data.message === "User deleted successfully") {
+        setEmployees(employees.filter((employee) => employee.id !== employeeId));
+        setMessage('Employee deleted successfully!');
+      } else {
+        setMessage('Failed to delete the employee.');
+      }
+    } catch (error) {
+      setMessage(`Error: ${error.response?.data?.message || error.message}`);
+    } finally {
+      setDeletePopup({ show: false, employeeId: null });
+      setTimeout(() => setMessage(''), 3000); // Clear the message after 3 seconds
+    }
+  };
+
   // Filter employees based on search term and filter criteria
   const filteredEmployees = employees.filter((employee) => {
     const matchesSearchTerm =
@@ -51,6 +70,8 @@ function EmployeeList() {
   return (
     <div className="employeeList-container">
       <div className="employeeList-heading">Employee List</div>
+
+      {message && <div className="employeeList-message">{message}</div>}
 
       <div className="employeeList-tableContainer">
         <div className="employeeList-topBar">
@@ -99,7 +120,10 @@ function EmployeeList() {
                   <button className="employeeList-editBtn">
                     <img src={editIcon} alt="Edit" className="employeeList-actionIcon" />
                   </button>
-                  <button className="employeeList-deleteBtn">
+                  <button
+                    className="employeeList-deleteBtn"
+                    onClick={() => setDeletePopup({ show: true, employeeId: employee.id })}
+                  >
                     <img src={deleteIcon} alt="Delete" className="employeeList-actionIcon" />
                   </button>
                 </td>
@@ -108,6 +132,22 @@ function EmployeeList() {
           </tbody>
         </table>
       </div>
+
+      {deletePopup.show && (
+        <div className="employeeList-popup">
+          <div className="employeeList-popupContent">
+            <p>Are you sure you want to delete this employee?</p>
+            <div className="employeeList-popupActions">
+              <button onClick={() => setDeletePopup({ show: false, employeeId: null })}>
+                Cancel
+              </button>
+              <button onClick={() => handleDeleteEmployee(deletePopup.employeeId)}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
