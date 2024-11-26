@@ -27,13 +27,14 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
   const [isPromotionOpen, setIsPromotionOpen] = useState(false);
   const [isEmployeeListOpen, setIsEmployeeListOpen] = useState(false);
   const [isGamificationOpen, setIsGamificationOpen] = useState(false);
+  const [isOrderListOpen, setIsOrderListOpen] = useState(false);
   const [isItemOpen, setIsItemOpen] = useState(false);  // New state for Future Price
 
   const toggleUserList = () => {
     setIsUserListOpen(!isUserListOpen);
   };
 
-  const toggleOrderList = () => {
+  const toggleCustomizeItem = () => {
     setIsCustomizeItemOpen(!isCustmizeItemOpen);
   };
 
@@ -162,14 +163,48 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               </li>
             </ul>
         </li>
-
-   {/* order list */}
+ {/* Order list */}
+        <li>
+          <button
+            className={`menu-item ${(activeIndex === 7 ||activeIndex === 8 )? 'active' : 'inactive'}`}
+            onClick={() => {
+              setIsOrderListOpen(!isOrderListOpen)
+              onTabClick(7);
+            }}>
+            <img src={order} alt="News Icon" className="icon" />
+            Order List
+            <img
+              src={isOrderListOpen ? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
+          </button>
+          <ul className={`submenu ${isOrderListOpen ? 'submenu-open' : ''}`}>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 7 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(7)}
+                >
+                  Current Order List
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 8? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(8)}
+                >
+                  Order History
+                </Link>
+              </li>
+            </ul>
+        </li>
+   {/* Customize item */}
 
         <li>
           <button
             className={`menu-item ${(activeIndex === 7 ||activeIndex === 8 )? 'active' : 'inactive'}`}
             onClick={() => {
-              toggleOrderList();
+              toggleCustomizeItem();
               onTabClick(7);
             }}
           >
@@ -325,6 +360,8 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             Logout
           </button>
         </li>
+
+        
       </ul>
     </div>
   );

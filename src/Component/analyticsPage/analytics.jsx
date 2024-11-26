@@ -115,7 +115,7 @@ const AnalyticsPage = () => {
             </div>
             <div className='dash-bottom-row dash-total-recent'>
                 <div className="enhanced-summary-card">
-                    <h4>Total Companies & Employees</h4>
+                    <h3>Total Companies & Employees</h3>
                     <div className="enhanced-summary-content">
                         <div className="summary-block">
                             <div className="summary-value">{data.totalCompanies}</div>
@@ -128,7 +128,7 @@ const AnalyticsPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="circular-card">
+                <div className="circular-card enhanced-recent-orders">
                     <h4>Average Review</h4>
                     <ResponsiveContainer width={200} height={200}>
                         <PieChart>
@@ -147,6 +147,15 @@ const AnalyticsPage = () => {
                         </PieChart>
                     </ResponsiveContainer>
                     <div className="circular-card-text">{data.averageReview} / 5 ({data.reviewCount} Reviews)</div>
+                </div>
+                <div className="enhanced-summary-card">
+                    <h3>Total Revenue</h3>
+                    <div className='dash-totalRevenue'>
+                    <p>{data.totalRevenue}</p>
+                    <div className="summary-card-footer">
+                        <span className="summary-card-subtext">Compared to yesterday</span>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

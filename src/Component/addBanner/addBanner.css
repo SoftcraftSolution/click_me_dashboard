@@ -113,3 +113,39 @@
     margin-top: 20px;
     font-weight: 500;
 }
+
+
+.currentBanners-container {
+    margin-top: 40px;
+    /* height: 200px; */
+}
+
+.currentBanners-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.currentBanners-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.currentBanner-item {
+    flex: 1;
+    min-width: 200px;
+    /* max-height: 200px; */
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.currentBanner-image {
+    max-width: 100%;
+    border-radius: 8px;
+}

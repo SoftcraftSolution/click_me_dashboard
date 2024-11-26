@@ -61,6 +61,16 @@
     background: rgba(43, 46, 233, 0.1);
     opacity: 0.5;
 }
+.dash-total-recent{
+    display: flex;
+    gap:20px
+
+}
+/* .dash-totalRevenue{
+    display: flex;
+    flex-direction: column;
+
+} */
 
 .enhanced-summary-card::before {
     width: 100px;
@@ -119,7 +129,7 @@
 }
 
 .enhanced-recent-orders {
-    background: linear-gradient(135deg, rgba(250, 200, 200, 0.1), rgba(255, 255, 255, 0));
+    background: linear-gradient(135deg, rgba(72, 125, 216, 0.1), rgba(255, 255, 255, 0));
 }
 
 .analytics-table {
@@ -134,7 +144,7 @@
 }
 
 .analytics-table th {
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     color: #333;
 }
 
@@ -203,4 +213,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 5%;
 }

@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import MainDashboard from '../DashboardMain/maindashboard.js';
-import SpotPrice from '../SpotPrice/spotprice.js';
-import VerifyUsers from '../VerifyUsers/verifyuser.js';
+
 import CompanyList from '../companylist/companylist.js';
-import NewsPage from '../News/news.js';
-import ExpiredTrial from '../ExpiredTrail/expiredtrial.js';
-import RejectedUserTrial from '../RejectedUser/rejecteduser.js';
-import Updates from '../Updates/Updates.js';
+
+
 import Sidebar from '../Sidebar/Sidebar.js';
 import Topbar from '../TopBar/topbar.js'; // Import the Topbar component
 import "./dashboard.css"; // Your CSS file for styling
 
-import AddNews from '../SelfNews/selfnews.js';
-
-import AddLocation from '../AddLocation/AddLocation.js';
 import Feedback from '../Feedback/Feedback.js';
-import AddSBI from '../AddSBIREFERENCE/AddSbi.js';
-import WarehouseStockEditor from '../AddWarehouse/addwarehouse.js';
 import AddCompany from '../addCompany/addCompany.jsx';
 import EmployeeList from '../employee/employeelist.jsx';
 import ItemList from '../itemList/itemList.jsx';
@@ -31,7 +22,7 @@ import AddReward from '../addReward/addReward.jsx';
 import CouponList from '../couponList/couponList.jsx';
 import CouponForm from '../couponForm/couponForm.jsx';
 import AnalyticsPage from '../analyticsPage/analytics.jsx';
-import EnhancedAnalyticsPage from '../analyticsPage/analytics.jsx';
+
 import AddCustomizeItem from '../addCustmizeItem/addCustomizeItem.jsx';
 import CustomizeItemList from '../addCustmizeItem/listItem.jsx';
 
@@ -86,6 +77,8 @@ const Dashboard = () => {
         return <Feedback />;
       case 17:
         return <AddBanner />;
+      // case 18:
+
       default:
         return null;
     }
