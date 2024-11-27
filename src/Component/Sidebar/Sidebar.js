@@ -23,6 +23,7 @@ import { Feedback } from '@mui/icons-material';
 const Sidebar = ({ activeIndex, onTabClick }) => {
   const navigate = useNavigate();
   const [isUserListOpen, setIsUserListOpen] = useState(false);
+  const [isExtraItemOpen, setIsExtraItemOpen] = useState(false);
   const [isCustmizeItemOpen, setIsCustomizeItemOpen] = useState(false);
   const [isPromotionOpen, setIsPromotionOpen] = useState(false);
   const [isEmployeeListOpen, setIsEmployeeListOpen] = useState(false);
@@ -163,13 +164,50 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
               </li>
             </ul>
         </li>
+        {/* extra item secttion */}
+        <li>
+          <button
+            className={`menu-item ${(activeIndex === 19 || activeIndex === 20 ) ? 'active' : 'inactive'}`}
+            onClick={() => {
+              setIsExtraItemOpen(!isExtraItemOpen); // Toggle future state
+              onTabClick(19);
+            }}
+          >
+            <img src={item} alt="Future Price Icon" className="icon" />
+            Extra Item
+            <img
+              src={isExtraItemOpen? upArrow : downArrow}
+              alt="Toggle"
+              className="news-icon"
+            />
+          </button>
+          <ul className={`submenu ${isExtraItemOpen ? 'submenu-open' : ''}`}>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 19 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(19)}
+                >
+                  Extra Item List
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={`submenu-item ${activeIndex === 20 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(20)}
+                >
+                  Add New Extra Item
+                </Link>
+              </li>
+              
+            </ul>
+        </li>
  {/* Order list */}
         <li>
           <button
-            className={`menu-item ${(activeIndex === 7 ||activeIndex === 8 )? 'active' : 'inactive'}`}
+            className={`menu-item ${(activeIndex === 18 ||activeIndex === 8 )? 'active' : 'inactive'}`}
             onClick={() => {
               setIsOrderListOpen(!isOrderListOpen)
-              onTabClick(7);
+              onTabClick(18);
             }}>
             <img src={order} alt="News Icon" className="icon" />
             Order List
@@ -182,20 +220,20 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
           <ul className={`submenu ${isOrderListOpen ? 'submenu-open' : ''}`}>
               <li>
                 <Link
-                  className={`submenu-item ${activeIndex === 7 ? 'active' : 'inactive'}`}
-                  onClick={() => onTabClick(7)}
+                  className={`submenu-item ${activeIndex === 18 ? 'active' : 'inactive'}`}
+                  onClick={() => onTabClick(18)}
                 >
                   Current Order List
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   className={`submenu-item ${activeIndex === 8? 'active' : 'inactive'}`}
                   onClick={() => onTabClick(8)}
                 >
                   Order History
                 </Link>
-              </li>
+              </li> */}
             </ul>
         </li>
    {/* Customize item */}

@@ -93,6 +93,31 @@ function EmployeeList() {
             <option value="5">5 Orders</option>
             <option value="10">10+ Orders</option>
           </select>
+          <div className="employeeList-exportButtonContainer">
+    <button 
+        className="employeeList-exportButton"
+        onClick={async () => {
+            try {
+                const response = await axios.get('https://clickmeal-backend.vercel.app/user/export-users', {
+                    responseType: 'blob', // Ensure the response is treated as a file
+                });
+                
+                // Create a URL for the blob and trigger a download
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Employee_List.xlsx'); // Set the file name
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error exporting users:', error.response?.data || error.message);
+            }
+        }}
+    >
+        Export
+    </button>
+</div>
         </div>
 
         <table className="employeeList-table">

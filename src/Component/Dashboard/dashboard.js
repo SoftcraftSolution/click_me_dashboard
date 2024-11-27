@@ -25,6 +25,9 @@ import AnalyticsPage from '../analyticsPage/analytics.jsx';
 
 import AddCustomizeItem from '../addCustmizeItem/addCustomizeItem.jsx';
 import CustomizeItemList from '../addCustmizeItem/listItem.jsx';
+import CurrentOrderList from '../orderlist/orderList.jsx';
+import ExtraItemList from '../listExtraItem/ExtraItemList.js';
+import AddExtraItem from '../addExtraItem/AddExtraItem.js';
 
 const Dashboard = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -77,8 +80,12 @@ const Dashboard = () => {
         return <Feedback />;
       case 17:
         return <AddBanner />;
-      // case 18:
-
+      case 18:
+        return <CurrentOrderList />;
+        case 19:
+          return <ExtraItemList />;
+          case 20:
+            return <AddExtraItem />;
       default:
         return null;
     }

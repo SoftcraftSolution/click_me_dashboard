@@ -128,3 +128,15 @@
     color: white;
 }
 
+.employeeList-exportButton {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 100%;
+    /* font-size: 16px; */
+    /* font-weight: bold; */
+    transition: background-color 0.3s ease;
+}
