@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './login.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/finallogoiris.png';
 
 function Login() {
   const [email, setEmail] = useState('');
