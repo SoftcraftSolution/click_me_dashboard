@@ -13,27 +13,35 @@ const MainDashboard = () => {
     <div id="dash-header">Dashboard</div>
     <div id="dash-first">
     <Card 
-        title="Basic Plan" 
+        title="Revenue" 
         count={721} 
         percentageGrowth={4.8} 
-        color="#2B2EE9" 
+        
         graphColor="#2B2EE9" 
       />
       <Card 
-        title="Standard Plan" 
+        title="Orders" 
 
         count={9000} 
         percentageGrowth={-4.8} 
-        color="#FF8A00" 
+        
         graphColor="#FF8A00" 
       />
       <Card 
-        title="Premium Plan" 
+        title="Visitors" 
         count={721} 
         percentageGrowth={4.8} 
-        color="#00B74A" 
+       
         graphColor="#00B74A" 
       />
+        <Card 
+        title="Conversion" 
+        count={721} 
+        percentageGrowth={4.8} 
+         
+        graphColor="#00B74A" 
+      />
+      
     </div>
     <div className='dash-total-recent'>
       <RevenueChart />

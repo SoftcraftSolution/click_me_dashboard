@@ -62,6 +62,7 @@ const AddBanner = () => {
             <div className="addBanner-title">Add Banner</div>
             <form className="addBanner-form" onSubmit={handleSubmit}>
                 <div className="addBanner-left">
+                    <div>Home Page Banner</div>
                     <input
                         className="addBanner-input"
                         type="text"

@@ -1,50 +1,41 @@
-import React from "react";
-import "./mostbought.css"
+import React from 'react';
+import './mostbought.css';
 
-const plansData = [
-  { users: 230, name: "Basic Plan", usage: 30, percent: 15, color: "#4263EB" },
-  { users: 160, name: "Standard Plan", usage: 15, percent: 7, color: "#F59E0B" },
-  { users: 100, name: "Premium Plan", usage: 5, percent: 3, color: "#10B981" },
-  { users: 969, name: "Free Trial Plan", usage: 80, percent: 75, color: "#FBBF24" },
+const categoriesData = [
+  { name: 'Wardrobe', count: 4569, color: '#ff4d4d', zIndex: 3 },
+  { name: 'Party Wear', count: 2457, color: '#00aaff', zIndex: 3 },
+  { name: 'Casual Wear', count: 1346, color: '#33cc33', zIndex: 3 },
 ];
 
-const MostBoughtPlans = () => {
+const TopSellingCategory = () => {
   return (
-    <div className="most-bought-plans">
-      <div className="mbought-title">Most Bought Plans</div>
-      <div className="mbought-table-container">
-        <div className="mbought-table-header">
-          <div className="header-item">No of Users</div>
-          <div className="header-item">Plan Name</div>
-          <div className="header-item">Usage</div>
-          <div className="header-item">Percent</div>
-        </div>
-        <div className="table-body">
-          {plansData.map((plan, index) => (
-            <div key={index} className="table-row">
-              <div className="table-cell">{plan.users}</div>
-              <div className="table-cell">{plan.name}</div>
-              <div className="table-cell">
-                <div className="progress-bar">
-                  <div
-                    className="progress"
-                    style={{ width: `${plan.usage}%`, backgroundColor: plan.color }}
-                  ></div>
-                </div>
-              </div>
-              <div className="table-cell">
-                <span
-                  className={`badge`} style={{ border:`1px solid ${plan.color}`} }
-                >
-                  {plan.percent}%
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+    <div className="top-selling-category">
+      <div className="top-selling-header">
+        <h3 className="category-title">Top Selling Category</h3>
+        <p className="category-description">Total 8765 products sold of all categories</p>
+      </div>
+      <div className="category-bubbles">
+        {categoriesData.map((category, index) => (
+          <div
+            key={index}
+            className="category-bubble"
+            style={{
+              backgroundColor: category.color,
+              width: `${100 + category.count / 100}px`,
+              height: `${100 + category.count / 100}px`,
+              zIndex: category.zIndex,
+            }}
+          >
+            <span className="bubble-text">
+              {category.name} <br />
+              <span className="bubble-count">{category.count}</span> <br />
+              Per Month
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default MostBoughtPlans;
+export default TopSellingCategory;

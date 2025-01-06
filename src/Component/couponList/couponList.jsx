@@ -9,6 +9,7 @@ const CouponList = () => {
     const [filterDate, setFilterDate] = useState('');
     const [deletePopup, setDeletePopup] = useState({ show: false, couponId: null });
     const [message, setMessage] = useState('');
+    const [isAddCouponPage, setIsAddCouponPage] = useState(false); // State for toggling the "Add Coupon" page
 
     useEffect(() => {
         fetch('https://clickmeal-backend.vercel.app/user/coupan-list')
@@ -59,71 +60,132 @@ const CouponList = () => {
 
     return (
         <div className="couponList-container">
-            <div className="couponList-title">Coupon List</div>
-
-            {message && <div className="couponList-message">{message}</div>}
-
-            <div className="couponList-card">
-                <div className="couponList-searchFilter">
-                    <input 
-                        type="text" 
-                        placeholder="Search by name, description, or employee..." 
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="couponList-searchInput" 
-                    />
-                    <input 
-                        type="date" 
-                        value={filterDate}
-                        onChange={(e) => setFilterDate(e.target.value)}
-                        className="couponList-dateInput" 
-                    />
-                </div>
-                <table className="couponList-table">
-                    <thead>
-                        <tr>
-                            <th>Promotion Name</th>
-                            <th>Promotion Type</th>
-                            <th>Company/Employee Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Description</th>
-                            <th>Coupon</th>
-                            <th>Redemption Limit</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredCoupons.map(coupon => (
-                            <tr key={coupon._id}>
-                                <td>{coupon.couponName}</td>
-                                <td>{coupon.couponType}</td>
-                                <td>{coupon.employeeName || 'N/A'}</td>
-                                <td>{new Date(coupon.createdAt).toLocaleDateString()}</td>
-                                <td>{new Date(coupon.expiryDate).toLocaleDateString()}</td>
-                                <td>{coupon.description}</td>
-                                <td>{coupon._id}</td>
-                                <td>{coupon.redemptionLimit}</td>
-                                <td className={getStatus(coupon.expiryDate) === 'Active' ? 'status-active' : 'status-expired'}>
-                                    {getStatus(coupon.expiryDate)}
-                                </td>
-                                <td>
-                                    <button className="couponList-editBtn">
-                                        <img src={editimg} alt="Edit" className="couponList-action-img" />
-                                    </button>
-                                    <button
-                                        className="couponList-deleteBtn"
-                                        onClick={() => setDeletePopup({ show: true, couponId: coupon._id })}
-                                    >
-                                        <img src={deleteimg} alt="Delete" className="couponList-action-img" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+            {isAddCouponPage ? (
+                // Add Coupon Form Page
+<div className="addCoupon-page">
+<div className='titleaddcoupon'>
+    <button className="backButton" onClick={() => setIsAddCouponPage(false)}>
+        &larr; 
+    </button>
+    <div className="addCoupon-title">Add Coupon</div>
+</div>
+    <form className="addCoupon-form">
+        <div className="form-row">
+            <div className="form-group">
+                <label>Coupon Name</label>
+                <input type="text" placeholder="Enter coupon name" />
             </div>
+            <div className="form-group">
+                <label>Expiry Date</label>
+                <input type="date" />
+            </div>
+        </div>
+        <div className="form-row">
+            <div className="form-group">
+                <label>Redemption Limit</label>
+                <select>
+                    <option value="1">1</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+            <div className="form-group">
+                <label>Coupon Code</label>
+                <input type="text" placeholder="Enter coupon code" />
+            </div>
+        </div>
+        <div className="form-row">
+            <div className="form-group full-width">
+                <label>Coupon Description</label>
+                <textarea placeholder="Enter description"></textarea>
+            </div>
+        </div>
+        <div className="form-row">
+            <div className="form-group full-width">
+                <label>Terms & Conditions</label>
+                <textarea placeholder="Add terms and conditions"></textarea>
+            </div>
+        </div>
+        <div className="form-row buttons-row">
+            <button className="saveButton" type="submit" style={{display:"flex",justifyContent:"flex-start"}}>Save</button>
+        </div>
+    </form>
+</div>
+
+            ) : (
+                // Coupon List Page
+                <>
+                    <div className="couponList-title">Coupons</div>
+                    <div className="couponList-searchFilter">
+                        <div className="flexgrpforbutton">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="couponList-searchInput"
+                            />
+                            <button
+                                className="addcouponbutton"
+                                onClick={() => setIsAddCouponPage(true)} // Show the Add Coupon page
+                            >
+                                Add Coupon
+                            </button>
+                        </div>
+                    </div>
+
+                    {message && <div className="couponList-message">{message}</div>}
+
+                    <div className="couponList-card">
+                        <table className="couponList-table">
+                            <thead>
+                                <tr>
+                                    <th>Coupon Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Description</th>
+                                    <th>Code</th>
+                                    <th>Limit</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredCoupons.map(coupon => (
+                                    <tr key={coupon._id}>
+                                        <td>{coupon.couponName}</td>
+                                        <td>{new Date(coupon.createdAt).toLocaleDateString()}</td>
+                                        <td>{new Date(coupon.expiryDate).toLocaleDateString()}</td>
+                                        <td>{coupon.description}</td>
+                                        <td>{coupon._id}</td>
+                                        <td>{coupon.redemptionLimit}</td>
+                                        <td
+                                            className={
+                                                getStatus(coupon.expiryDate) === 'Active'
+                                                    ? 'status-active'
+                                                    : 'status-expired'
+                                            }
+                                        >
+                                            {getStatus(coupon.expiryDate)}
+                                        </td>
+                                        <td>
+                                            <button className="couponList-editBtn">
+                                                <img src={editimg} alt="Edit" className="couponList-action-img" />
+                                            </button>
+                                            <button
+                                                className="couponList-deleteBtn"
+                                                onClick={() => setDeletePopup({ show: true, couponId: coupon._id })}
+                                            >
+                                                <img src={deleteimg} alt="Delete" className="couponList-action-img" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
+            )}
 
             {deletePopup.show && (
                 <div className="couponList-popup">

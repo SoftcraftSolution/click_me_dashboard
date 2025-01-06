@@ -29,7 +29,7 @@ const Card = ({ title, count, percentageGrowth, color, graphColor }) => {
       <div className="dash-card-content">
         <div className="card-header">
           {/* <div>s8yf8n43r89f fewiffet4gdgs54tg</div> */}
-          <span>Today Active <span className="highlight" style={{ color }}>{title}</span> Users</span>
+          <span> <span className="highlight" style={{ color }}>{title}</span></span>
         </div>
        
         <div className="card-body">
@@ -46,7 +46,7 @@ const Card = ({ title, count, percentageGrowth, color, graphColor }) => {
           </div>
           
         </div>
-        <p className="subtext" style={{margin:'0px'}}>from yesterday</p>
+       
       </div>
      
       <div className="graph">

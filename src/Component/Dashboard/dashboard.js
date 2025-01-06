@@ -11,7 +11,7 @@ import "./dashboard.css"; // Your CSS file for styling
 
 import Feedback from '../Feedback/Feedback.js';
 import AddCompany from '../addCompany/addCompany.jsx';
-import EmployeeList from '../employee/employeelist.jsx';
+import ProductPage from '../employee/Products.jsx';
 import ItemList from '../itemList/itemList.jsx';
 import AddItem from '../addItem/addItem.jsx';
 import AddSubcategory from '../addSubcategory/addSubcategory.jsx';
@@ -28,6 +28,8 @@ import CustomizeItemList from '../addCustmizeItem/listItem.jsx';
 import CurrentOrderList from '../orderlist/orderList.jsx';
 import ExtraItemList from '../listExtraItem/ExtraItemList.js';
 import AddExtraItem from '../addExtraItem/AddExtraItem.js';
+import AddProduct from '../employee/AddProduct.js';
+import MainDashboard from '../DashboardMain/maindashboard.js';
 
 const Dashboard = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -49,11 +51,11 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeIndex) {
       case 0:
-        return <AnalyticsPage />;
+        return <MainDashboard />;
       case 3:
-        return <EmployeeList />;
+        return <ProductPage />;
       case 4:
-        return <ItemList />;
+        return <AddProduct />;
       case 5:
         return <AddItem />;
       case 6:
@@ -95,7 +97,7 @@ const Dashboard = () => {
     <div className="dashboarddd-container">
       <Sidebar activeIndex={activeIndex} onTabClick={handleTabClick} />
       <div className="main-content">
-        <Topbar /> {/* Add the Topbar below the Sidebar */}
+        {/* Add the Topbar below the Sidebar */}
         <div className="home-content">
           {renderContent()}
         </div>

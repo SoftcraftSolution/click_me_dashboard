@@ -11,7 +11,8 @@
 }
 #dash-header{
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
+  color: #1C2A53;
 }
 .dash-total-recent {
   /* height: 300px; */

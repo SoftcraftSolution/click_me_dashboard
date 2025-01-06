@@ -1,45 +1,41 @@
 import React from 'react';
-import CustomerRow from './customeRow';
 import './recentcustomer.css';
+import productimg from '../../../assets/productimageforproductpage.png';
 
-const RecentCustomers = ({ customerData = [] }) => {
-  // Dummy data to use when no customerData is provided
-  const dummyData = [
-    { fullName: 'John Doe', plan: 'Premium Plan', amount: '2999' },
-    { fullName: 'Jane Smith', plan: 'Standard Plan', amount: '1999' },
-    { fullName: 'Alex Brown', plan: 'Basic Plan', amount: '699' },
-    { fullName: 'Chris Green', plan: 'Standard Plan', amount: '1999' }
+const TrendingProducts = ({ products = [] }) => {
+  // Dummy data if no products are passed
+  const dummyProducts = [
+    { name: 'Black & Green Long Kurti top', image: productimg, visits: '12.4k' },
+    { name: 'Black & Green Long Kurti top', image: productimg, visits: '12.4k' },
+    { name: 'Black & Green Long Kurti top', image: productimg, visits: '12.4k' },
+    { name: 'Black & Green Long Kurti top', image: productimg, visits: '12.4k' },
+    { name: 'Black & Green Long Kurti top', image: productimg, visits: '12.4k' },
   ];
 
-  // Use provided data if available, otherwise fall back to dummyData
-  const data = customerData.length > 0 ? customerData : dummyData;
+  const data = products.length > 0 ? products : dummyProducts;
 
   return (
-    <div className="customer-table-container">
-      <div className="recent-table-header">
-        <div className="table-title">Recent Customers</div>
-        <a href="#" className="view-all">
-          View All →
-        </a>
+    <div className="trending-products-container">
+      <div className="trending-products-header">
+        <span className="trending-title">Trending Products</span>
       </div>
-      <div className="customer-table">
-        <div className="customer-table-row header">
-          <span className="customer-table-cell">Full Name</span>
-          <div className="customer-table-cell">Subscription Type</div>
-          <div className="customer-table-cell">Amount</div>
+      <div className="trending-products-table">
+        <div className="trending-table-row header">
+          <span className="table-header-cell">Product Name</span>
+          <span style={{textAlign:"right"}} className="table-header-cell">Visits</span>
         </div>
-        {/* Render CustomerRow for each customer */}
-        {data.map((customer, index) => (
-          <CustomerRow
-            key={index}
-            fullName={customer.fullName}
-            plan={customer.plan}
-            amount={customer.amount}
-          />
+        {data.map((product, index) => (
+          <div className="trending-table-row" key={index}>
+            <div className="trending-product-cell">
+              <img src={product.image} alt={product.name} className="product-image" />
+              <span className="product-name">{product.name}</span>
+            </div>
+            <span className="trending-visit-count">{product.visits}</span>
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default RecentCustomers;
+export default TrendingProducts;

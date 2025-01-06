@@ -81,15 +81,15 @@ function PaymentList() {
       <div className="paymentList-analytics">
         <div className="paymentList-analyticsCard">
           <div className="analytics-title">Total Revenue</div>
-          <div className="analytics-value">{totalRevenue}€</div>
+          <div className="analytics-value">{totalRevenue}Rs</div>
         </div>
         <div className="paymentList-analyticsCard">
           <div className="analytics-title">Monthly Revenue</div>
-          <div className="analytics-value">{monthlyRevenue}€</div>
+          <div className="analytics-value">{monthlyRevenue}Rs</div>
         </div>
         <div className="paymentList-analyticsCard">
           <div className="analytics-title">Today's Revenue</div>
-          <div className="analytics-value">{todayRevenue}€</div>
+          <div className="analytics-value">{todayRevenue}Rs</div>
         </div>
       </div>
       
@@ -126,15 +126,12 @@ function PaymentList() {
         <table className="paymentList-table">
           <thead>
             <tr>
-              <th>Employee Name</th>
+              <th>Customer Name</th>
              
-            
-              <th>Company Name</th>
-              <th>No of Dishes</th>
-              <th>Amount</th>
+  
               <th>Order ID</th>
               
-              <th>Order Status</th>
+              <th>Price</th>
               <th>Payment Method</th>
               <th>Status</th>
             </tr>
@@ -146,13 +143,12 @@ function PaymentList() {
                 
                
                 <td>{order.companyName}</td>
-                <td>{order.numberOfDishes}</td>
-                <td>{order.amount}€</td>
+                
+                <td>{order.amount}Rs</td>
                 <td>{order.orderId}</td>
-               
-                <td>{order.orderStatus}</td>
+        
                 <td>{order.paymentMethod}</td>
-                <td>{order.paymentStatus}</td>
+                
               </tr>
             ))}
           </tbody>

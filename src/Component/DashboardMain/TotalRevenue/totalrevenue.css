@@ -5,21 +5,19 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   flex: 2;
   width: 680px;
-  /* margin: 0 auto; */
-  /* height: 300px; */
-
 }
 
 .chart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
-.chart-header  {
-  font-size: 24px;
-  color: #2B2EE9;
+.revenue-title {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: 600;
 }
 
 .controls {
@@ -27,24 +25,14 @@
   align-items: center;
 }
 
-.controls select, .controls input {
+.controls select,
+.controls input {
   margin-left: 10px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
+  background-color: #f0f2f6;
   font-size: 14px;
-}
-
-.chart {
-  margin-top: 20px;
-}
-
-.recharts-default-tooltip {
-  font-size: 14px;
-}
-.revenue-title{
-  font-size: 1.2rem;
-  color: black;
   font-weight: 600;
-
+  font-family: "Poppins", sans-serif;
 }

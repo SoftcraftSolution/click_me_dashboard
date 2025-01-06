@@ -14,10 +14,10 @@
 
 .addBanner-title {
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 400;
 
     margin-bottom: 20px;
-    color: #333;
+    color: #1C2A53;
 }
 
 .addBanner-form {
@@ -86,9 +86,9 @@
 }
 
 .addBanner-submitBtn {
-    background-color: #4CAF50;
+    background-color: #DA231D;
     color: white;
-    padding: 12px;
+    padding: 10px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -101,7 +101,7 @@
 }
 
 .addBanner-submitBtn:hover {
-    background-color: #45a049;
+  
 }
 
 .addBanner-successPopup {

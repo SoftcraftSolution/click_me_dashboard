@@ -43,7 +43,7 @@
   .home-content {
     /* padding: 20px; */
     flex-grow: 1; /* Ensures the content takes up remaining space */
-    background-color: #e6eff5ba;
+    background-color: #f8f8f8;
     overflow-y: auto; /* Allow scrolling if the content overflows */
   }
   

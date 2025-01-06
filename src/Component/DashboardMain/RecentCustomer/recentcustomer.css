@@ -1,68 +1,66 @@
-.customer-table-container {
+.trending-products-container {
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  flex:1
+  width: 30%;
 }
 
-.recent-table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
-  
+.trending-products-header {
+  padding-bottom: 10px;
 }
 
-.table-title {
+.trending-title {
   font-size: 1.2rem;
   font-weight: 600;
   color: #333;
 }
 
-.view-all {
-  color: #f8981d;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.customer-table {
+.trending-products-table {
   width: 100%;
 }
 
-.customer-table-row {
+.trending-table-row {
   display: flex;
   justify-content: space-between;
-  padding: 12px 15px;
-
-  background-color: transparent;
-  font-weight: 500;
-  border-bottom: 1px solid #555;
-  color: #555;
+  align-items: center;
+  padding: 10px 0;
   
 }
 
-.customer-table-row {
-  /* background-color: #f9f9f9; */
+.trending-table-row.header {
+  font-weight: 700;
+  color: #333;
 }
 
-.customer-table-cell {
-  /* flex: 1; */
+.table-header-cell {
+  flex: 1;
   text-align: left;
-  text-wrap: nowrap;
-  padding-right:10px;
-  /* border:1px solid red; */
-  width:auto
 }
 
-.premium-plan {
-  color: #b524f9; /* Purple color for Premium Plan */
+.trending-product-cell {
+  display: flex;
+  align-items: center;
+  flex: 2;
 }
 
-.standard-plan {
-  color: #2962ff; /* Blue color for Standard Plan */
+.product-image {
+  width: 40px;
+  height: 50px;
+  
+  margin-right: 10px;
 }
 
-.basic-plan {
-  color: #f8981d; /* Orange color for Basic Plan */
+.product-name {
+  font-size: 0.95rem;
+  color: #23272E;
+  white-space: normal;
+  font-weight: 400;
+}
+
+.trending-visit-count {
+  flex: 1;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #333;
 }
