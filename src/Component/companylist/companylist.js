@@ -3,6 +3,7 @@ import './companylist.css';
 import deleteimg from '../../assets/deleteimg.png';
 import editimg from '../../assets/action.png';
 import customerimg from '../../assets/customerimg.png';
+import axios from 'axios'; // Import axios
 
 const CompanyList = () => {
     const [companies, setCompanies] = useState([]); // Default to empty array
@@ -14,20 +15,19 @@ const CompanyList = () => {
     const [error, setError] = useState(null); // To handle errors
 
     useEffect(() => {
-        fetch('https://clickmeal-backend.vercel.app/user/get-company')
+        // Replacing fetch with axios for the new endpoint
+        axios.get('https://clothing-backend-one.vercel.app/user/get-customer')
             .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to fetch companies');
+                if (response.data.message === 'Customers retrieved successfully') {
+                    setCompanies(response.data.data || []); // Ensure the data is always an array
+                } else {
+                    setError('Failed to load customers');
                 }
-                return response.json();
-            })
-            .then((data) => {
-                setCompanies(data.data || []); // Ensure the data is always an array
                 setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching companies:', error);
-                setError('Failed to load companies');
+                setError('Failed to load customers');
                 setLoading(false);
             });
     }, []);
@@ -59,7 +59,7 @@ const CompanyList = () => {
     const filteredCompanies = (companies || []).filter((company) => {
         const matchesSearchTerm =
             company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            company.deliveryAddress.toLowerCase().includes(searchTerm.toLowerCase());
+            company.address.toLowerCase().includes(searchTerm.toLowerCase()); // Changed to 'address'
 
         const matchesDate = filterDate
             ? new Date(company.createdAt).toISOString().split('T')[0] === filterDate
@@ -79,21 +79,21 @@ const CompanyList = () => {
                     <div class="flexinfo">
                     <div>
                         <h2>${company.name}</h2>
-                        <div>Email: ${company.deliveryAddress}</div>
+                        <div>Email: ${company.email}</div> <!-- Displaying email -->
 
                     </div>
                     <div>
                         <div>Personal Information</div>
                         <p><strong>Gender:</strong> ${company.gender || 'N/A'}</p>
-                        <p><strong>Phone No:</strong> ${company.phone || 'N/A'}</p>
-                        <p><strong>Date of Birth:</strong> ${company.dateOfBirth || 'N/A'}</p>
+                        <p><strong>Phone No:</strong> ${company.phoneNo || 'N/A'}</p>
+                        <p><strong>Date of Birth:</strong> ${company.dob ? new Date(company.dob).toLocaleDateString() : 'N/A'}</p> <!-- Format date -->
                         <p><strong>Member Since:</strong> ${new Date(company.createdAt).toLocaleDateString()}</p>
                         
                     </div>
                            <div>
                         <div>Personal Information</div>
                         <p><strong>A-105,Andugundu Apartment ,Mumbai -10000</strong> </p>
-                        <p><strong>Total Orders</strong>: 100</p>
+                        <p><strong>Total Orders</strong>: ${company.noOfOrders}</p> <!-- Displaying noOfOrders -->
                       
                     
                         
@@ -137,7 +137,6 @@ const CompanyList = () => {
             </div>
         `;
     };
-    
 
     return (
         <div className="companyList-container">
@@ -174,8 +173,8 @@ const CompanyList = () => {
                             {filteredCompanies.map((company) => (
                                 <tr key={company._id} onClick={() => handleViewDetails(company)}>
                                     <td>{company.name}</td>
-                                    <td>{company.deliveryAddress}</td>
-                                    <td>{company.numberOfEmployees}</td>
+                                    <td>{company.email}</td> {/* Displaying email */}
+                                    <td>{company.noOfOrders}</td> {/* Displaying noOfOrders */}
                                     <td>{new Date(company.createdAt).toLocaleDateString()}</td>
                                     <td>
                                         <button className="companyList-editBtn">
@@ -201,7 +200,7 @@ const CompanyList = () => {
             {deletePopup.show && (
                 <div className="companyList-popup">
                     <div className="companyList-popupContent">
-                        <p>Are you sure you want to delete this company?</p>
+                        <p>Are you sure you want to delete this customer?</p>
                         <div className="companyList-popupActions">
                             <button onClick={() => setDeletePopup({ show: false, companyId: null })}>Cancel</button>
                             <button onClick={() => handleDeleteCompany(deletePopup.companyId)}>Confirm</button>
