@@ -3,6 +3,8 @@ import "./Products.css";
 import "./AddProduct.css";
 import productimg from "../../assets/productimageforproductpage.png";
 import detailsimg from '../../assets/detailsimage.png';
+import pencil from '../../assets/editpencillatest.png';
+import trash from '../../assets/trashbinlatest.png';
 
 // Sample product data
 const products = [
@@ -155,8 +157,8 @@ const ProductPage = () => {
                   </td>
                   <td>{product.visits}</td>
                   <td className="action-buttons">
-                    <button className="edit-btn">✏️</button>
-                    <button className="delete-btn">🗑️</button>
+                    <button className="edit-btn"><img style={{height:"21px"}} src={pencil} alt="pen" /></button>
+                    <button className="delete-btn"><img style={{height:"21px"}} src={trash} alt="tra" /></button>
                   </td>
                 </tr>
               ))}
@@ -247,7 +249,7 @@ const ProductPage = () => {
             <form className="addproduct-form" onSubmit={handleSave}>
               <div className="addproduct-form-row">
                 <div className="addproduct-form-group">
-                  <label>Product Name</label>
+                 
                   <input
                     className="addproduct-input"
                     type="text"
@@ -255,7 +257,7 @@ const ProductPage = () => {
                   />
                 </div>
                 <div className="addproduct-form-group">
-                  <label>Price</label>
+                  
                   <input
                     className="addproduct-input"
                     type="number"
@@ -266,7 +268,7 @@ const ProductPage = () => {
 
               <div className="addproduct-form-row">
                 <div className="addproduct-form-group">
-                  <label>Colour</label>
+              
                   <select className="addproduct-select">
                     <option>Select Colour</option>
                     <option>Red</option>
@@ -275,7 +277,7 @@ const ProductPage = () => {
                   </select>
                 </div>
                 <div className="addproduct-form-group">
-                  <label>Size</label>
+                  
                   <select className="addproduct-select">
                     <option>Select Size</option>
                     <option>Small</option>
@@ -285,59 +287,16 @@ const ProductPage = () => {
                 </div>
               </div>
 
-              <div className="addproduct-form-group">
-                <label>Product Description</label>
+              <div style={{display:"flex",flexDirection:"row",width:"100%"}} className="addproduct-form-group">
+                
                 <textarea
                   className="addproduct-textarea"
                   placeholder="Enter product description"
-                  style={{ height: "150px" }}
+                  style={{ height: "150px" ,width:"49%",marginTop:"20px"}}
                 ></textarea>
-              </div>
-
-              <div className="addproduct-form-row">
-                <div className="addproduct-form-group">
-                  <label>Quantity</label>
-                  <input
-                    className="addproduct-input"
-                    type="number"
-                    placeholder="Enter quantity"
-                  />
-                </div>
-                <div className="addproduct-form-group">
-                  <label>Fabric Type</label>
-                  <select className="addproduct-select">
-                    <option>Select Fabric Type</option>
-                    <option>Cotton</option>
-                    <option>Silk</option>
-                    <option>Wool</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="addproduct-form-row">
-                <div className="addproduct-form-group">
-                  <label>Pattern</label>
-                  <select className="addproduct-select">
-                    <option>Select Pattern</option>
-                    <option>Plain</option>
-                    <option>Striped</option>
-                    <option>Checked</option>
-                  </select>
-                </div>
-                <div className="addproduct-form-group">
-                  <label>Fit</label>
-                  <select className="addproduct-select">
-                    <option>Select Fit</option>
-                    <option>Slim</option>
-                    <option>Regular</option>
-                    <option>Loose</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="addproduct-form-group">
-                <label>Category</label>
-                <div className="addproduct-radio-group">
+                  <div className="addproduct-form-group">
+                
+                <div style={{paddingLeft:"16px",paddingTop:"10px",marginTop:"10px"}} className="addproduct-radio-group">
                   <label>
                     <input
                       type="radio"
@@ -366,18 +325,69 @@ const ProductPage = () => {
                     Casual
                   </label>
                 </div>
+                <div>
+                <select style={{width:"97%",marginLeft:"20px"}} className="addproduct-select">
+                    <option>Select Fabric Type</option>
+                    <option>Cotton</option>
+                    <option>Silk</option>
+                    <option>Wool</option>
+                  </select>
+                </div>
+
+                
+                
+                <select style={{width:"97%",marginLeft:"20px"}} className="addproduct-select">
+                  <option>Select Fit</option>
+                  <option>Slim</option>
+                  <option>Regular</option>
+                  <option>Loose</option>
+                </select>
+             
+              </div>
+
+              </div>
+              
+            
+                 
+             
+              <div className="addproduct-form-row">
+                <div style={{display:"flex",flexDirection:"row"}} className="addproduct-form-group">
+                 
+                  <input style={{width:"49%"}}
+                    className="addproduct-input"
+                    type="number"
+                    placeholder="Enter quantity"
+                  />
+
+<div className="addproduct-form-group">
+                 
+                  <input className="addproduct-input" type="file" />
+                </div>
+                </div>
+        
               </div>
 
               <div className="addproduct-form-row">
-                <div className="addproduct-form-group">
-                  <label>Upload Cover Image</label>
+                <div style={{display:"flex",flexDirection:"row"}} className="addproduct-form-group">
+                
+                  <select style={{width:"49%"}} className="addproduct-select">
+                    <option>Select Pattern</option>
+                    <option>Plain</option>
+                    <option>Striped</option>
+                    <option>Checked</option>
+                  </select>
+
+                  <div className="addproduct-form-group">
+                  
                   <input className="addproduct-input" type="file" />
                 </div>
-                <div className="addproduct-form-group">
-                  <label>Upload Second Image</label>
-                  <input className="addproduct-input" type="file" />
                 </div>
+           
               </div>
+
+
+
+        
 
               <button type="submit" className="addproduct-save-btn">
                 Save

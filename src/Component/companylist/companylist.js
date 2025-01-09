@@ -4,6 +4,7 @@ import deleteimg from '../../assets/deleteimg.png';
 import editimg from '../../assets/action.png';
 import customerimg from '../../assets/customerimg.png';
 import axios from 'axios'; // Import axios
+import proimage from '../../assets/profile.png';
 
 const CompanyList = () => {
     const [companies, setCompanies] = useState([]); // Default to empty array
@@ -154,7 +155,7 @@ const CompanyList = () => {
             {message && <div className="companyList-message">{message}</div>}
 
             {loading ? (
-                <p>Loading companies...</p>
+                <p>Loading customers...</p>
             ) : error ? (
                 <p>{error}</p>
             ) : (
@@ -172,25 +173,29 @@ const CompanyList = () => {
                         <tbody>
                             {filteredCompanies.map((company) => (
                                 <tr key={company._id} onClick={() => handleViewDetails(company)}>
-                                    <td>{company.name}</td>
-                                    <td>{company.email}</td> {/* Displaying email */}
-                                    <td>{company.noOfOrders}</td> {/* Displaying noOfOrders */}
-                                    <td>{new Date(company.createdAt).toLocaleDateString()}</td>
-                                    <td>
-                                        <button className="companyList-editBtn">
-                                            <img src={editimg} alt="Action" className="companyList-action-img" />
-                                        </button>
-                                        <button
-                                            className="companyList-deleteBtn"
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // Prevent triggering row click
-                                                setDeletePopup({ show: true, companyId: company._id });
-                                            }}
-                                        >
-                                            <img src={deleteimg} alt="Delete" className="companyList-action-img" />
-                                        </button>
-                                    </td>
-                                </tr>
+                                <td style={{display:"flex",alignItems:"center"}}>
+                                    <img src={proimage} alt="Profile" className="companyList-profileImage" /> {/* Placeholder Profile Image */}
+                                    {company.name}
+                                </td>
+                                <td>{company.email}</td> {/* Displaying email */}
+                                <td>{company.noOfOrders}</td> {/* Displaying noOfOrders */}
+                                <td>{new Date(company.createdAt).toLocaleDateString()}</td>
+                                <td>
+                                    <button className="companyList-editBtn">
+                                        <img src={editimg} alt="Action" className="companyList-action-img" />
+                                    </button>
+                                    <button
+                                        className="companyList-deleteBtn"
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent triggering row click
+                                            setDeletePopup({ show: true, companyId: company._id });
+                                        }}
+                                    >
+                                        <img src={deleteimg} alt="Delete" className="companyList-action-img" />
+                                    </button>
+                                </td>
+                            </tr>
+                            
                             ))}
                         </tbody>
                     </table>

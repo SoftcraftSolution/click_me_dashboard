@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
 
 .product-page {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', 'Poppins', sans-serif;
   color: #333;
 }
 
@@ -17,15 +18,18 @@
 .tabs button {
   margin-right: 10px;
   padding: 8px 16px;
-  border: none;
+  border: none;   
   cursor: pointer;
   background: transparent;
+  color:#8B909A;
+  font-weight:400;
 }
 
 .tabs button.active {
   background: transparent;   /* Remove background color */
   color: #DA231D;            /* Change text color if desired */
-  border-bottom: 3px solid #DA231D;  /* Add bottom border */
+  border-bottom: 3px solid #DA231D;
+  font-weight: bold;  /* Add bottom border */
 }
 
 .search-add {
