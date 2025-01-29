@@ -351,7 +351,7 @@ const ProductPage = () => {
                  
              
               <div className="addproduct-form-row">
-                <div style={{display:"flex",flexDirection:"row"}} className="addproduct-form-group">
+                <div style={{display:"flex",flexDirection:"row",gap:"20px"}} className="addproduct-form-group">
                  
                   <input style={{width:"49%"}}
                     className="addproduct-input"
@@ -368,7 +368,7 @@ const ProductPage = () => {
               </div>
 
               <div className="addproduct-form-row">
-                <div style={{display:"flex",flexDirection:"row"}} className="addproduct-form-group">
+                <div style={{display:"flex",flexDirection:"row",gap:"20px"}} className="addproduct-form-group">
                 
                   <select style={{width:"49%"}} className="addproduct-select">
                     <option>Select Pattern</option>

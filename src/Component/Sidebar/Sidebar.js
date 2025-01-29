@@ -112,7 +112,7 @@ const Sidebar = ({ activeIndex, onTabClick }) => {
             }}
           >
             <img src={pay} alt="Logout Icon" className="icon" />
-           Payment
+           Exchange
           </button>
         </li>
 
