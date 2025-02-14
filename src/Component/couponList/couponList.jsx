@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import Axios
 import './couponList.css';
 import deleteimg from '../../assets/deleteimg.png';
 import editimg from '../../assets/action.png';
@@ -9,22 +10,38 @@ const CouponList = () => {
     const [filterDate, setFilterDate] = useState('');
     const [deletePopup, setDeletePopup] = useState({ show: false, couponId: null });
     const [message, setMessage] = useState('');
-    const [isAddCouponPage, setIsAddCouponPage] = useState(false); // State for toggling the "Add Coupon" page
+    const [isAddCouponPage, setIsAddCouponPage] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        limit: '1',
+        description: '',
+        expiryDate: ''
+    });
 
+    // Fetch coupons from the new API
     useEffect(() => {
-        fetch('https://clickmeal-backend.vercel.app/user/coupan-list')
+        fetch('https://clouthing-ecommerce-backend.vercel.app/coupon/listCoupons')
             .then(response => response.json())
-            .then(data => setCoupons(data.coupons))
-            .catch(error => console.error("Error fetching coupons:", error));
+            .then(data => {
+                if (data.success) {
+                    setCoupons(data.coupons);
+                } else {
+                    setMessage('Failed to fetch coupons.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching coupons:', error);
+                setMessage('Error fetching coupons.');
+            });
     }, []);
 
     const handleDeleteCoupon = async (couponId) => {
         try {
-            const response = await fetch(`https://clickmeal-backend.vercel.app/user/delete-coupan?id=${couponId}`, {
+            const response = await fetch(`https://clouthing-ecommerce-backend.vercel.app/coupon/deleteCoupon?id=${couponId}`, {
                 method: 'DELETE',
             });
             const result = await response.json();
-            if (result.message === "Coupon deleted successfully.") {
+            if (result.message === 'Coupon deleted successfully.') {
                 setCoupons(coupons.filter((coupon) => coupon._id !== couponId));
                 setMessage('Coupon deleted successfully!');
             } else {
@@ -34,16 +51,61 @@ const CouponList = () => {
             setMessage(`Error: ${error.message}`);
         } finally {
             setDeletePopup({ show: false, couponId: null });
-            setTimeout(() => setMessage(''), 3000); // Clear the message after 3 seconds
+            setTimeout(() => setMessage(''), 3000);
         }
     };
 
-    // Filtered coupons based on search term and filter criteria
+    const handleAddCoupon = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('https://clouthing-ecommerce-backend.vercel.app/coupon/addCoupon', {
+                name: formData.name,
+                limit: parseInt(formData.limit, 10), // Ensure limit is a number
+                description: formData.description,
+                expiryDate: formData.expiryDate
+            });
+            if (response.data.message === "Coupon added successfully.") {
+                setMessage('Coupon added successfully!');
+                setIsAddCouponPage(false);
+                setFormData({
+                    name: '',
+                    limit: '1',
+                    description: '',
+                    expiryDate: ''
+                });
+                // Refresh the coupon list
+                fetch('https://clouthing-ecommerce-backend.vercel.app/coupon/listCoupons')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            setCoupons(data.coupons);
+                        } else {
+                            setMessage('Failed to fetch updated coupons.');
+                        }
+                    })
+                    .catch(error => console.error("Error fetching coupons:", error));
+            } else {
+                setMessage('Failed to add the coupon.');
+            }
+        } catch (error) {
+            setMessage(`Error: ${error.message}`);
+        } finally {
+            setTimeout(() => setMessage(''), 3000);
+        }
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
     const filteredCoupons = coupons.filter(coupon => {
         const matchesSearchTerm =
-            coupon.couponName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            coupon.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (coupon.employeeName && coupon.employeeName.toLowerCase().includes(searchTerm.toLowerCase()));
+            coupon.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            coupon.description.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesDate = filterDate
             ? new Date(coupon.createdAt).toISOString().split('T')[0] === filterDate
@@ -61,59 +123,68 @@ const CouponList = () => {
     return (
         <div className="couponList-container">
             {isAddCouponPage ? (
-                // Add Coupon Form Page
-<div className="addCoupon-page">
-<div className='titleaddcoupon'>
-    <button className="backButton" onClick={() => setIsAddCouponPage(false)}>
-        &larr; 
-    </button>
-    <div className="addCoupon-title">Add Coupon</div>
-</div>
-    <form className="addCoupon-form">
-        <div className="form-row">
-            <div className="form-group">
-                <label>Coupon Name</label>
-                <input type="text" placeholder="Enter coupon name" />
-            </div>
-            <div className="form-group">
-                <label>Expiry Date</label>
-                <input type="date" />
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group">
-                <label>Redemption Limit</label>
-                <select>
-                    <option value="1">1</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-            <div className="form-group">
-                <label>Coupon Code</label>
-                <input type="text" placeholder="Enter coupon code" />
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group full-width">
-                <label>Coupon Description</label>
-                <textarea placeholder="Enter description"></textarea>
-            </div>
-        </div>
-        <div className="form-row">
-            <div className="form-group full-width">
-                <label>Terms & Conditions</label>
-                <textarea placeholder="Add terms and conditions"></textarea>
-            </div>
-        </div>
-        <div className="form-row buttons-row">
-            <button className="saveButton" type="submit" style={{display:"flex",justifyContent:"flex-start"}}>Save</button>
-        </div>
-    </form>
-</div>
-
+                <div className="addCoupon-page">
+                    <div className='titleaddcoupon'>
+                        <button className="backButton" onClick={() => setIsAddCouponPage(false)}>
+                            &larr;
+                        </button>
+                        <div className="addCoupon-title">Add Coupon</div>
+                    </div>
+                    <form className="addCoupon-form" onSubmit={handleAddCoupon}>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Coupon Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Enter coupon name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Expiry Date</label>
+                                <input
+                                    type="date"
+                                    name="expiryDate"
+                                    value={formData.expiryDate}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Redemption Limit</label>
+                                <select
+                                    name="limit"
+                                    value={formData.limit}
+                                    onChange={handleInputChange}
+                                    required
+                                >
+                                    <option value="1">1</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
+                                <textarea
+                                    name="description"
+                                    placeholder="Enter description"
+                                    value={formData.description}
+                                    onChange={handleInputChange}
+                                    required
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div className="form-row buttons-row">
+                            <button className="saveButton" type="submit">Save</button>
+                        </div>
+                    </form>
+                </div>
             ) : (
-                // Coupon List Page
                 <>
                     <div className="couponList-title">Coupons</div>
                     <div className="couponList-searchFilter">
@@ -127,7 +198,7 @@ const CouponList = () => {
                             />
                             <button
                                 className="addcouponbutton"
-                                onClick={() => setIsAddCouponPage(true)} // Show the Add Coupon page
+                                onClick={() => setIsAddCouponPage(true)}
                             >
                                 Add Coupon
                             </button>
@@ -153,12 +224,12 @@ const CouponList = () => {
                             <tbody>
                                 {filteredCoupons.map(coupon => (
                                     <tr key={coupon._id}>
-                                        <td>{coupon.couponName}</td>
+                                        <td>{coupon.name}</td>
                                         <td>{new Date(coupon.createdAt).toLocaleDateString()}</td>
                                         <td>{new Date(coupon.expiryDate).toLocaleDateString()}</td>
                                         <td>{coupon.description}</td>
-                                        <td>{coupon._id}</td>
-                                        <td>{coupon.redemptionLimit}</td>
+                                        <td>{coupon.code}</td>
+                                        <td>{coupon.limit}</td>
                                         <td
                                             className={
                                                 getStatus(coupon.expiryDate) === 'Active'

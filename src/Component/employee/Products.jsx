@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import Axios
 import "./Products.css";
 import "./AddProduct.css";
 import productimg from "../../assets/productimageforproductpage.png";
-import detailsimg from '../../assets/detailsimage.png';
-import pencil from '../../assets/editpencillatest.png';
-import trash from '../../assets/trashbinlatest.png';
+import detailsimg from "../../assets/detailsimage.png";
+import pencil from "../../assets/editpencillatest.png";
+import trash from "../../assets/trashbinlatest.png";
 
 // Sample product data
 const products = [
@@ -67,9 +68,45 @@ const ProductPage = () => {
     setIsAddingProduct(true);
   };
 
-  const handleSave = (event) => {
+  const handleSave = async (event) => {
     event.preventDefault();
-    // Handle form submission logic here
+
+    // Gather form data
+    const formData = {
+      name: event.target.elements.productName.value,
+      price: parseFloat(event.target.elements.price.value),
+      pattern: event.target.elements.pattern.value,
+      fabric: event.target.elements.fabric.value,
+      subcategory: event.target.elements.subcategory.value,
+      colors: Array.from(event.target.elements.colors.selectedOptions).map(
+        (option) => option.value
+      ),
+      sizes: [
+        { size: "M", quantity: parseInt(event.target.elements.quantity.value) },
+        // Add more sizes as needed
+      ],
+      description: event.target.elements.description.value,
+      categories: category,
+      fit: event.target.elements.fit.value,
+      images: [], // Add image URLs after uploading
+    };
+
+    try {
+      // Make POST request to the API
+      const response = await axios.post(
+        "https://clouthing-ecommerce-backend.onrender.com/product/addProduct",
+        formData
+      );
+
+      // Handle success
+      console.log("Product added successfully:", response.data);
+      alert("Product added successfully!");
+      setIsAddingProduct(false); // Close the form
+    } catch (error) {
+      // Handle error
+      console.error("Error adding product:", error);
+      alert("Failed to add product. Please try again.");
+    }
   };
 
   const handleBackClick = () => {
@@ -157,8 +194,12 @@ const ProductPage = () => {
                   </td>
                   <td>{product.visits}</td>
                   <td className="action-buttons">
-                    <button className="edit-btn"><img style={{height:"21px"}} src={pencil} alt="pen" /></button>
-                    <button className="delete-btn"><img style={{height:"21px"}} src={trash} alt="tra" /></button>
+                    <button className="edit-btn">
+                      <img style={{ height: "21px" }} src={pencil} alt="pen" />
+                    </button>
+                    <button className="delete-btn">
+                      <img style={{ height: "21px" }} src={trash} alt="tra" />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -169,17 +210,21 @@ const ProductPage = () => {
         <>
           {/* Product Details */}
           <button
-                className="back-btn"
-                onClick={handleBackToProducts}
-                style={{ marginBottom: "20px", cursor: "pointer", border: "none",
-                  background: "transparent",fontSize:"20px" ,color:"#1C2A53"}}
-              >
-                ← Product Details
-              </button>
+            className="back-btn"
+            onClick={handleBackToProducts}
+            style={{
+              marginBottom: "20px",
+              cursor: "pointer",
+              border: "none",
+              background: "transparent",
+              fontSize: "20px",
+              color: "#1C2A53",
+            }}
+          >
+            ← Product Details
+          </button>
           <div className="product-details-container">
-    
             <div className="product-details-basic">
-        
               <h2>Basic Information</h2>
               <p>
                 <span>Name:</span> {selectedProduct.name}
@@ -225,7 +270,9 @@ const ProductPage = () => {
                     <tr key={index}>
                       <td>{size.size}</td>
                       <td
-                        className={size.quantity > 0 ? "in-stock" : "out-of-stock"}
+                        className={
+                          size.quantity > 0 ? "in-stock" : "out-of-stock"
+                        }
                       >
                         {size.quantity}
                       </td>
@@ -249,145 +296,208 @@ const ProductPage = () => {
             <form className="addproduct-form" onSubmit={handleSave}>
               <div className="addproduct-form-row">
                 <div className="addproduct-form-group">
-                 
                   <input
                     className="addproduct-input"
                     type="text"
+                    name="productName"
                     placeholder="Enter product name"
+                    required
                   />
                 </div>
                 <div className="addproduct-form-group">
-                  
                   <input
                     className="addproduct-input"
                     type="number"
+                    name="price"
                     placeholder="Enter price"
+                    required
                   />
                 </div>
               </div>
 
               <div className="addproduct-form-row">
                 <div className="addproduct-form-group">
-              
-                  <select className="addproduct-select">
-                    <option>Select Colour</option>
-                    <option>Red</option>
-                    <option>Blue</option>
-                    <option>Green</option>
+                  <select
+                    className="addproduct-select"
+                    name="colors"
+                    multiple
+                    required
+                  >
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Green">Green</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
                   </select>
                 </div>
                 <div className="addproduct-form-group">
-                  
-                  <select className="addproduct-select">
-                    <option>Select Size</option>
-                    <option>Small</option>
-                    <option>Medium</option>
-                    <option>Large</option>
+                  <select className="addproduct-select" name="size" required>
+                    <option value="M">Medium</option>
+                    <option value="L">Large</option>
+                    <option value="XL">Extra Large</option>
                   </select>
                 </div>
               </div>
 
-              <div style={{display:"flex",flexDirection:"row",width:"100%"}} className="addproduct-form-group">
-                
+              <div
+                style={{ display: "flex", flexDirection: "row", width: "100%" }}
+                className="addproduct-form-group"
+              >
                 <textarea
                   className="addproduct-textarea"
+                  name="description"
                   placeholder="Enter product description"
-                  style={{ height: "150px" ,width:"49%",marginTop:"20px"}}
+                  style={{ height: "150px", width: "49%", marginTop: "20px" }}
+                  required
                 ></textarea>
-                  <div className="addproduct-form-group">
-                
-                <div style={{paddingLeft:"16px",paddingTop:"10px",marginTop:"10px"}} className="addproduct-radio-group">
-                  <label>
-                    <input
-                      type="radio"
-                      value="Wardrobe"
-                      checked={category === "Wardrobe"}
-                      onChange={handleCategoryChange}
-                    />
-                    Wardrobe
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      value="Occasion"
-                      checked={category === "Occasion"}
-                      onChange={handleCategoryChange}
-                    />
-                    Occasion
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      value="Casual"
-                      checked={category === "Casual"}
-                      onChange={handleCategoryChange}
-                    />
-                    Casual
-                  </label>
-                </div>
-                <div>
-                <select style={{width:"97%",marginLeft:"20px"}} className="addproduct-select">
-                    <option>Select Fabric Type</option>
-                    <option>Cotton</option>
-                    <option>Silk</option>
-                    <option>Wool</option>
+                <div className="addproduct-form-group">
+                  {/* Subcategory */}
+                  <select
+                    style={{ width: "97%", marginLeft: "20px" }}
+                    className="addproduct-select"
+                    name="subcategory"
+                    required
+                  >
+                    <option value="">Select Subcategory</option>
+                    <option value="Kurti">Kurti</option>
+                    <option value="Shirt">Shirt</option>
+                    <option value="Pant">Pant</option>
+                    <option value="Jacket">Jacket</option>
+                    <option value="Saree">Saree</option>
+                    <option value="Dress">Dress</option>
                   </select>
+
+                  {/* Pattern */}
+                  <select
+                    style={{
+                      width: "97%",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                    }}
+                    className="addproduct-select"
+                    name="pattern"
+                    required
+                  >
+                    <option value="">Select Pattern</option>
+                    <option value="Lucknowi">Lucknowi</option>
+                    <option value="Printed">Printed</option>
+                    <option value="Plain">Plain</option>
+                    <option value="Embroidery">Embroidery</option>
+                    <option value="Other">Other</option>
+                  </select>
+
+                  {/* Fabric */}
+                  <select
+                    style={{
+                      width: "97%",
+                      marginLeft: "20px",
+                      marginTop: "10px",
+                    }}
+                    className="addproduct-select"
+                    name="fabric"
+                    required
+                  >
+                    <option value="">Select Fabric</option>
+                    <option value="Cotton">Cotton</option>
+                    <option value="Silk">Silk</option>
+                    <option value="Wool">Wool</option>
+                    <option value="Polyester">Polyester</option>
+                    <option value="Linen">Linen</option>
+                  </select>
+
+                  {/* Categories */}
+                  <div
+                    style={{
+                      paddingLeft: "16px",
+                      paddingTop: "10px",
+                      marginTop: "10px",
+                    }}
+                    className="addproduct-radio-group"
+                  >
+                    <label>
+                      <input
+                        type="radio"
+                        value="Wardrobe"
+                        checked={category === "Wardrobe"}
+                        onChange={handleCategoryChange}
+                        required
+                      />
+                      Wardrobe
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="Casual Wear"
+                        checked={category === "Casual Wear"}
+                        onChange={handleCategoryChange}
+                      />
+                      Casual Wear
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="Occasion Wear"
+                        checked={category === "Occasion Wear"}
+                        onChange={handleCategoryChange}
+                      />
+                      Occasion Wear
+                    </label>
+                  </div>
                 </div>
-
-                
-                
-                <select style={{width:"97%",marginLeft:"20px"}} className="addproduct-select">
-                  <option>Select Fit</option>
-                  <option>Slim</option>
-                  <option>Regular</option>
-                  <option>Loose</option>
-                </select>
-             
               </div>
 
-              </div>
-              
-            
-                 
-             
               <div className="addproduct-form-row">
-                <div style={{display:"flex",flexDirection:"row",gap:"20px"}} className="addproduct-form-group">
-                 
-                  <input style={{width:"49%"}}
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "20px" }}
+                  className="addproduct-form-group"
+                >
+                  <input
+                    style={{ width: "49%" }}
                     className="addproduct-input"
                     type="number"
+                    name="quantity"
                     placeholder="Enter quantity"
+                    required
                   />
-
-<div className="addproduct-form-group">
-                 
-                  <input className="addproduct-input" type="file" />
+                  <div className="addproduct-form-group">
+                    <input
+                      className="addproduct-input"
+                      type="file"
+                      name="images"
+                      multiple
+                      required
+                    />
+                  </div>
                 </div>
-                </div>
-        
               </div>
 
               <div className="addproduct-form-row">
-                <div style={{display:"flex",flexDirection:"row",gap:"20px"}} className="addproduct-form-group">
-                
-                  <select style={{width:"49%"}} className="addproduct-select">
-                    <option>Select Pattern</option>
-                    <option>Plain</option>
-                    <option>Striped</option>
-                    <option>Checked</option>
+                <div
+                  style={{ display: "flex", flexDirection: "row", gap: "20px" }}
+                  className="addproduct-form-group"
+                >
+                  <select
+                    style={{ width: "49%" }}
+                    className="addproduct-select"
+                    name="fit"
+                    required
+                  >
+                    <option value="">Select Fit</option>
+                    <option value="Slim">Slim</option>
+                    <option value="Regular">Regular</option>
+                    <option value="Loose">Loose</option>
                   </select>
-
                   <div className="addproduct-form-group">
-                  
-                  <input className="addproduct-input" type="file" />
+                    <input
+                      className="addproduct-input"
+                      type="file"
+                      name="images"
+                      multiple
+                      required
+                    />
+                  </div>
                 </div>
-                </div>
-           
               </div>
-
-
-
-        
 
               <button type="submit" className="addproduct-save-btn">
                 Save

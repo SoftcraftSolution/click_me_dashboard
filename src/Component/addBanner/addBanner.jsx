@@ -36,7 +36,7 @@ const AddBanner = () => {
         formData.append('image', image);
 
         try {
-            const response = await axios.post('https://clickmeal-backend.vercel.app/user/add-banner', formData, {
+            const response = await axios.post('https://clothing-backend-one.vercel.app/user/add-banner', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             console.log('Banner added:', response.data);

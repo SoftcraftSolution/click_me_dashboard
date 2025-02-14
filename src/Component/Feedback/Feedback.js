@@ -1,47 +1,29 @@
 import './Feedback.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function FeedbackList() {
-  // Dummy data for feedbacks
-  const dummyFeedbacks = [
-    {
-      id: 'FB123',
-      username: 'John Doe',
-      email: 'johndoe@example.com',
-      companyName: 'Tech Solutions',
-      rating: 4,
-      description: 'Great service, will use again.',
-    },
-    {
-      id: 'FB124',
-      username: 'Jane Smith',
-      email: 'janesmith@example.com',
-      companyName: 'Marketing Co.',
-      rating: 5,
-      description: 'Excellent experience, highly recommended!',
-    },
-    {
-      id: 'FB125',
-      username: 'Bob Johnson',
-      email: 'bobjohnson@example.com',
-      companyName: 'Web Innovators',
-      rating: 3,
-      description: 'Good, but there is room for improvement.',
-    },
-    {
-      id: 'FB126',
-      username: 'Alice Brown',
-      email: 'alicebrown@example.com',
-      companyName: 'Creative Solutions',
-      rating: 2,
-      description: 'Not satisfied with the service, could be better.',
-    },
-  ];
-
-  const [feedbacks, setFeedbacks] = useState(dummyFeedbacks);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRating, setSelectedRating] = useState('');
   const [selectedMessage, setSelectedMessage] = useState('');  // To hold the selected message for the popup
+
+  // Function to fetch feedback data from the API
+  const fetchFeedbacks = async () => {
+    try {
+      const response = await axios.get('https://clouthing-ecommerce-backend.vercel.app/user/getContactUs');
+      if (response.data.success) {
+        setFeedbacks(response.data.messages);
+      } else {
+        console.error('Failed to fetch feedback messages.');
+      }
+    } catch (error) {
+      console.error('Error fetching feedbacks:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeedbacks();  // Fetch feedbacks when the component mounts
+  }, []);
 
   // Function to render stars based on rating
   const renderStars = (rating) => {
@@ -54,14 +36,13 @@ function FeedbackList() {
     );
   };
 
-  // Filter feedbacks based on search term and selected rating
+  // Filter feedbacks based on search term
   const filteredFeedbacks = feedbacks.filter((feedback) => {
-    const matchesSearch = feedback.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchesSearch = feedback.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          feedback.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           feedback.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          feedback.companyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          feedback.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRating = selectedRating ? feedback.rating === parseInt(selectedRating, 10) : true;
-    return matchesSearch && matchesRating;
+                          feedback.message.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
   });
 
   // Handle the "View" button click to show the message in a popup
@@ -92,20 +73,23 @@ function FeedbackList() {
               <th>EMAIL ADDRESS</th>
               <th>PHONE NO</th>
               <th>DATE & TIME</th>
-             
               <th>MESSAGE</th> {/* Added column for View button */}
             </tr>
           </thead>
           <tbody>
             {filteredFeedbacks.map((feedback) => (
-              <tr key={feedback.id}>
-                <td>{feedback.username}</td>
+              <tr key={feedback._id}>
+                <td>{feedback.firstName} {feedback.lastName}</td>
                 <td>{feedback.email}</td>
-                <td>{feedback.companyName}</td>
-                <td>{feedback.description}</td>
-                
+                <td>{feedback.phone}</td>
+                <td>{new Date(feedback.createdAt).toLocaleString()}</td>
                 <td>
-                  <button style={{border:"none",background:"transparent",textDecoration:"underline",fontSize:"14px"}} className="viewButton" onClick={() => handleViewMessage(feedback.description)}>View</button>
+                  <button 
+                    style={{border:"none",background:"transparent",textDecoration:"underline",fontSize:"14px"}} 
+                    className="viewButton" 
+                    onClick={() => handleViewMessage(feedback.message)}>
+                    View
+                  </button>
                 </td>
               </tr>
             ))}
