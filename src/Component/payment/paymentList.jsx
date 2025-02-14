@@ -165,7 +165,7 @@ function ExchangeList() {
           <h1>Exchange</h1>
           <div style={{ paddingBottom: "10px" }} className="exchange-ordertabs">
             <button className="exchange-active">Return Placed</button>
-            <button>Packaging</button>
+            <button>Ordered</button>
             <button>On the Way</button>
             <button>Delivered</button>
             <button>Cancelled</button>
