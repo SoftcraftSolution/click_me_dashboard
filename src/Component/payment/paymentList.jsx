@@ -66,26 +66,19 @@ function ExchangeList() {
     const { subtotal, deliveryCharge, tax, discount, totalAmount } = calculateSummary(items);
     return (
       <div className="exchange-orderDetails-summary">
-        <h3>Summary</h3>
-        <div className="exchange-summary-item">
-          <span>Subtotal</span>
-          <span>${subtotal}</span>
+       
+        
+        <div className="exchange-reason-section">
+          <h3>Reason for exchanging the product?</h3>
+          <p>{selectedOrder.reason || "Site is smaller/larger than expected."}</p>
         </div>
-        <div className="exchange-summary-item">
-          <span>Delivery Charges</span>
-          <span>${deliveryCharge}</span>
+        <div className="exchange-description-section">
+          <h3>Describe the Problem</h3>
+          <p>{selectedOrder.description || "Comment here..."}</p>
         </div>
-        <div className="exchange-summary-item">
-          <span>GST and Service Tax</span>
-          <span>${tax.toFixed(2)}</span>
-        </div>
-        <div className="exchange-summary-item">
-          <span>Coupon Discount</span>
-          <span>-${discount}</span>
-        </div>
-        <div className="exchange-summary-total">
-          <span>Total Amount</span>
-          <span>${totalAmount.toFixed(2)}</span>
+        <div className="exchange-new-size-section">
+          <h3>New Selected Size</h3>
+          <p>{selectedOrder.newSize || "SXL"}</p>
         </div>
       </div>
     );

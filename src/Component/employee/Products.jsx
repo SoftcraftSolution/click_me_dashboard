@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Import Axios
+import axios from "axios";
 import "./Products.css";
 import "./AddProduct.css";
 import productimg from "../../assets/productimageforproductpage.png";
@@ -7,58 +7,63 @@ import detailsimg from "../../assets/detailsimage.png";
 import pencil from "../../assets/editpencillatest.png";
 import trash from "../../assets/trashbinlatest.png";
 
-// Sample product data
-const products = [
-  {
-    id: 1,
-    name: "Black & Green Long Kurti Top",
-    price: "2457₹",
-    pattern: "Lucknowi",
-    fabric: "Italian Linear",
-    category: "Wardrobe - Long Kurti",
-    description:
-      "The term kurti traditionally refers to waist coats, jackets, and blouses that sit above the waist without side slits. It is believed to have descended from the tunic of the Shunga period (2nd century B.C.).",
-    sizes: [
-      { size: "M", quantity: 244 },
-      { size: "L", quantity: 244 },
-      { size: "XL", quantity: 244 },
-      { size: "XXL", quantity: 10 },
-      { size: "3XL", quantity: 244 },
-    ],
-    images: [productimg, productimg], // Replace with actual image URLs
-    totalOrders: 506,
-    totalQty: 14,
-    status: "Out of Stock",
-    visits: "124k",
-  },
-  {
-    id: 2,
-    name: "Black & Green Co-ord Set",
-    price: "3499₹",
-    pattern: "Striped",
-    fabric: "Silk",
-    category: "Occasion - Co-ord Set",
-    description:
-      "A trendy co-ord set for modern fashion lovers. Perfect for casual and evening wear.",
-    sizes: [
-      { size: "M", quantity: 50 },
-      { size: "L", quantity: 120 },
-      { size: "XL", quantity: 60 },
-    ],
-    images: [productimg, productimg],
-    totalOrders: 760,
-    totalQty: 14,
-    status: "In Stock",
-    visits: "200k",
-  },
-  // Add more products as needed
-];
-
 const ProductPage = () => {
   const [category, setCategory] = useState("Wardrobe");
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const [isViewingDetails, setIsViewingDetails] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [sizes, setSizes] = useState([
+    { size: "M", quantity: 0 },
+    { size: "L", quantity: 0 },
+    { size: "XL", quantity: 0 },
+  ]);
+
+  // Define the products array inside the component
+  const products = [
+    {
+      id: 1,
+      name: "Black & Green Long Kurti Top",
+      price: "2457₹",
+      pattern: "Lucknowi",
+      fabric: "Italian Linear",
+      category: "Wardrobe - Long Kurti",
+      description:
+        "The term kurti traditionally refers to waist coats, jackets, and blouses that sit above the waist without side slits. It is believed to have descended from the tunic of the Shunga period (2nd century B.C.).",
+      sizes: [
+        { size: "M", quantity: 244 },
+        { size: "L", quantity: 244 },
+        { size: "XL", quantity: 244 },
+        { size: "XXL", quantity: 10 },
+        { size: "3XL", quantity: 244 },
+      ],
+      images: [productimg, productimg], // Replace with actual image URLs
+      totalOrders: 506,
+      totalQty: 14,
+      status: "Out of Stock",
+      visits: "124k",
+    },
+    {
+      id: 2,
+      name: "Black & Green Co-ord Set",
+      price: "3499₹",
+      pattern: "Striped",
+      fabric: "Silk",
+      category: "Occasion - Co-ord Set",
+      description:
+        "A trendy co-ord set for modern fashion lovers. Perfect for casual and evening wear.",
+      sizes: [
+        { size: "M", quantity: 50 },
+        { size: "L", quantity: 120 },
+        { size: "XL", quantity: 60 },
+      ],
+      images: [productimg, productimg],
+      totalOrders: 760,
+      totalQty: 14,
+      status: "In Stock",
+      visits: "200k",
+    },
+    // Add more products as needed
+  ];
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
@@ -68,10 +73,15 @@ const ProductPage = () => {
     setIsAddingProduct(true);
   };
 
+  const handleSizeQuantityChange = (index, value) => {
+    const updatedSizes = [...sizes];
+    updatedSizes[index].quantity = parseInt(value, 10) || 0;
+    setSizes(updatedSizes);
+  };
+
   const handleSave = async (event) => {
     event.preventDefault();
-
-    // Gather form data
+  
     const formData = {
       name: event.target.elements.productName.value,
       price: parseFloat(event.target.elements.price.value),
@@ -81,29 +91,22 @@ const ProductPage = () => {
       colors: Array.from(event.target.elements.colors.selectedOptions).map(
         (option) => option.value
       ),
-      sizes: [
-        { size: "M", quantity: parseInt(event.target.elements.quantity.value) },
-        // Add more sizes as needed
-      ],
+      sizes: sizes,
       description: event.target.elements.description.value,
       categories: category,
       fit: event.target.elements.fit.value,
       images: [], // Add image URLs after uploading
     };
-
+  
     try {
-      // Make POST request to the API
       const response = await axios.post(
         "https://clouthing-ecommerce-backend.onrender.com/product/addProduct",
         formData
       );
-
-      // Handle success
       console.log("Product added successfully:", response.data);
       alert("Product added successfully!");
-      setIsAddingProduct(false); // Close the form
+      setIsAddingProduct(false);
     } catch (error) {
-      // Handle error
       console.error("Error adding product:", error);
       alert("Failed to add product. Please try again.");
     }
@@ -330,13 +333,6 @@ const ProductPage = () => {
                     <option value="White">White</option>
                   </select>
                 </div>
-                <div className="addproduct-form-group">
-                  <select className="addproduct-select" name="size" required>
-                    <option value="M">Medium</option>
-                    <option value="L">Large</option>
-                    <option value="XL">Extra Large</option>
-                  </select>
-                </div>
               </div>
 
               <div
@@ -451,23 +447,21 @@ const ProductPage = () => {
                   style={{ display: "flex", flexDirection: "row", gap: "20px" }}
                   className="addproduct-form-group"
                 >
-                  <input
-                    style={{ width: "49%" }}
-                    className="addproduct-input"
-                    type="number"
-                    name="quantity"
-                    placeholder="Enter quantity"
-                    required
-                  />
-                  <div className="addproduct-form-group">
-                    <input
-                      className="addproduct-input"
-                      type="file"
-                      name="images"
-                      multiple
-                      required
-                    />
-                  </div>
+                  {/* Size and Quantity Fields */}
+                  {sizes.map((size, index) => (
+                    <div key={index} style={{ display: "flex", gap: "10px" }}>
+                      <span>{size.size}</span>
+                      <input
+                        type="number"
+                        value={size.quantity}
+                        onChange={(e) =>
+                          handleSizeQuantityChange(index, e.target.value)
+                        }
+                        placeholder="Quantity"
+                        required
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -483,9 +477,9 @@ const ProductPage = () => {
                     required
                   >
                     <option value="">Select Fit</option>
-                    <option value="Slim">Slim</option>
-                    <option value="Regular">Regular</option>
-                    <option value="Loose">Loose</option>
+                    <option value="Slim">Slim Fit</option>
+                    <option value="Regular">Regular Fit</option>
+                    <option value="Loose">Loose Fit</option>
                   </select>
                   <div className="addproduct-form-group">
                     <input
