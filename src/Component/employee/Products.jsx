@@ -12,57 +12,66 @@ const ProductPage = () => {
   const [isAddingProduct, setIsAddingProduct] = useState(false);
   const [isViewingDetails, setIsViewingDetails] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [sizes, setSizes] = useState([
-    { size: "M", quantity: 0 },
-    { size: "L", quantity: 0 },
-    { size: "XL", quantity: 0 },
-  ]);
+  const [sizes, setSizes] = useState([{ size: "M", quantity: 0 }]);
+  const [images, setImages] = useState([]);
 
-  // Define the products array inside the component
+  // Define the products array with 3 example products
   const products = [
     {
       id: 1,
-      name: "Black & Green Long Kurti Top",
-      price: "2457₹",
-      pattern: "Lucknowi",
-      fabric: "Italian Linear",
-      category: "Wardrobe - Long Kurti",
-      description:
-        "The term kurti traditionally refers to waist coats, jackets, and blouses that sit above the waist without side slits. It is believed to have descended from the tunic of the Shunga period (2nd century B.C.).",
+      name: "Product 1",
+      category: "Wardrobe",
+      totalOrders: 10,
+      totalQty: 50,
+      status: "In Stock",
+      visits: 100,
+      price: 29.99,
+      pattern: "Printed",
+      fabric: "Cotton",
+      description: "A stylish product for your wardrobe.",
       sizes: [
-        { size: "M", quantity: 244 },
-        { size: "L", quantity: 244 },
-        { size: "XL", quantity: 244 },
-        { size: "XXL", quantity: 10 },
-        { size: "3XL", quantity: 244 },
+        { size: "M", quantity: 20 },
+        { size: "L", quantity: 30 },
       ],
-      images: [productimg, productimg], // Replace with actual image URLs
-      totalOrders: 506,
-      totalQty: 14,
-      status: "Out of Stock",
-      visits: "124k",
+      images: [detailsimg, detailsimg], // Example images
     },
     {
       id: 2,
-      name: "Black & Green Co-ord Set",
-      price: "3499₹",
-      pattern: "Striped",
+      name: "Product 2",
+      category: "Casual",
+      totalOrders: 5,
+      totalQty: 25,
+      status: "Out of Stock",
+      visits: 50,
+      price: 49.99,
+      pattern: "Plain",
       fabric: "Silk",
-      category: "Occasion - Co-ord Set",
-      description:
-        "A trendy co-ord set for modern fashion lovers. Perfect for casual and evening wear.",
+      description: "A comfortable product for casual wear.",
       sizes: [
-        { size: "M", quantity: 50 },
-        { size: "L", quantity: 120 },
-        { size: "XL", quantity: 60 },
+        { size: "M", quantity: 0 },
+        { size: "L", quantity: 25 },
       ],
-      images: [productimg, productimg],
-      totalOrders: 760,
-      totalQty: 14,
-      status: "In Stock",
-      visits: "200k",
+      images: [detailsimg, detailsimg], // Example images
     },
-    // Add more products as needed
+    {
+      id: 3,
+      name: "Product 3",
+      category: "Occasion",
+      totalOrders: 15,
+      totalQty: 60,
+      status: "In Stock",
+      visits: 200,
+      price: 79.99,
+      pattern: "Embroidery",
+      fabric: "Silk",
+      description: "An elegant product for special occasions.",
+      sizes: [
+        { size: "M", quantity: 10 },
+        { size: "L", quantity: 20 },
+        { size: "XL", quantity: 30 },
+      ],
+      images: [detailsimg, detailsimg], // Example images
+    },
   ];
 
   const handleCategoryChange = (event) => {
@@ -79,29 +88,52 @@ const ProductPage = () => {
     setSizes(updatedSizes);
   };
 
+  const handleAddSize = () => {
+    if (sizes.length < 3) {
+      const nextSize = sizes.length === 1 ? "L" : "XL";
+      setSizes([...sizes, { size: nextSize, quantity: 0 }]);
+    }
+  };
+
+  const handleImageChange = (event) => {
+    const files = event.target.files;
+    if (files.length > 2) {
+      alert("You can only upload up to 2 images.");
+      return;
+    }
+    setImages([...files]);
+  };
+
   const handleSave = async (event) => {
     event.preventDefault();
-  
-    const formData = {
-      name: event.target.elements.productName.value,
-      price: parseFloat(event.target.elements.price.value),
-      pattern: event.target.elements.pattern.value,
-      fabric: event.target.elements.fabric.value,
-      subcategory: event.target.elements.subcategory.value,
-      colors: Array.from(event.target.elements.colors.selectedOptions).map(
-        (option) => option.value
-      ),
-      sizes: sizes,
-      description: event.target.elements.description.value,
-      categories: category,
-      fit: event.target.elements.fit.value,
-      images: [], // Add image URLs after uploading
-    };
-  
+
+    const formData = new FormData();
+    formData.append("name", event.target.elements.productName.value);
+    formData.append("price", parseFloat(event.target.elements.price.value));
+    formData.append("pattern", event.target.elements.pattern.value);
+    formData.append("fabric", event.target.elements.fabric.value);
+    formData.append("subcategory", event.target.elements.subcategory.value);
+    formData.append("colors", Array.from(event.target.elements.colors.selectedOptions).map(
+      (option) => option.value
+    ).join(","));
+    formData.append("sizes", JSON.stringify(sizes));
+    formData.append("description", event.target.elements.description.value);
+    formData.append("categories", category);
+    formData.append("fit", event.target.elements.fit.value);
+
+    images.forEach((image, index) => {
+      formData.append(`images`, image);
+    });
+
     try {
       const response = await axios.post(
         "https://clouthing-ecommerce-backend.onrender.com/product/addProduct",
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       console.log("Product added successfully:", response.data);
       alert("Product added successfully!");
@@ -444,13 +476,17 @@ const ProductPage = () => {
 
               <div className="addproduct-form-row">
                 <div
-                  style={{ display: "flex", flexDirection: "row", gap: "20px" }}
+                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
                   className="addproduct-form-group"
                 >
-                  {/* Size and Quantity Fields */}
                   {sizes.map((size, index) => (
                     <div key={index} style={{ display: "flex", gap: "10px" }}>
-                      <span>{size.size}</span>
+                      <input
+                        type="text"
+                        value={size.size}
+                        readOnly
+                        style={{ width: "50px" }}
+                      />
                       <input
                         type="number"
                         value={size.quantity}
@@ -460,6 +496,20 @@ const ProductPage = () => {
                         placeholder="Quantity"
                         required
                       />
+                      {index === sizes.length - 1 && sizes.length < 3 && (
+                        <button
+                          type="button"
+                          onClick={handleAddSize}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            fontSize: "20px",
+                          }}
+                        >
+                          +
+                        </button>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -487,6 +537,7 @@ const ProductPage = () => {
                       type="file"
                       name="images"
                       multiple
+                      onChange={handleImageChange}
                       required
                     />
                   </div>
