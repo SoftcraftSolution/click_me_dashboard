@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Products.css";
 import "./AddProduct.css";
@@ -14,68 +14,28 @@ const ProductPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sizes, setSizes] = useState([{ size: "M", quantity: 0 }]);
   const [images, setImages] = useState([]);
+  const [products, setProducts] = useState([]); // State to store fetched products
 
-  // Define the products array with 3 example products
-  const products = [
-    {
-      id: 1,
-      name: "Product 1",
-      category: "Wardrobe",
-      totalOrders: 10,
-      totalQty: 50,
-      status: "In Stock",
-      visits: 100,
-      price: 29.99,
-      pattern: "Printed",
-      fabric: "Cotton",
-      description: "A stylish product for your wardrobe.",
-      sizes: [
-        { size: "M", quantity: 20 },
-        { size: "L", quantity: 30 },
-      ],
-      images: [detailsimg, detailsimg], // Example images
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      category: "Casual",
-      totalOrders: 5,
-      totalQty: 25,
-      status: "Out of Stock",
-      visits: 50,
-      price: 49.99,
-      pattern: "Plain",
-      fabric: "Silk",
-      description: "A comfortable product for casual wear.",
-      sizes: [
-        { size: "M", quantity: 0 },
-        { size: "L", quantity: 25 },
-      ],
-      images: [detailsimg, detailsimg], // Example images
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      category: "Occasion",
-      totalOrders: 15,
-      totalQty: 60,
-      status: "In Stock",
-      visits: 200,
-      price: 79.99,
-      pattern: "Embroidery",
-      fabric: "Silk",
-      description: "An elegant product for special occasions.",
-      sizes: [
-        { size: "M", quantity: 10 },
-        { size: "L", quantity: 20 },
-        { size: "XL", quantity: 30 },
-      ],
-      images: [detailsimg, detailsimg], // Example images
-    },
-  ];
+  // Fetch products from the API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(
+          "https://clouthing-ecommerce-backend.vercel.app/dashboard/listProducts"
+        );
+        if (response.data && response.data.data && response.data.data.products) {
+          setProducts(response.data.data.products);
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
+    fetchProducts();
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  const handleCategoryChange = (selectedCategory) => {
+    setCategory(selectedCategory);
   };
 
   const handleAddProductClick = () => {
@@ -158,6 +118,9 @@ const ProductPage = () => {
     setSelectedProduct(null);
   };
 
+  // Filter products based on the active category
+  const filteredProducts = products.filter(product => product.categories === category);
+
   return (
     <div className="product-page">
       {!isAddingProduct && !isViewingDetails ? (
@@ -168,9 +131,24 @@ const ProductPage = () => {
               Products
             </h2>
             <div className="tabs">
-              <button className="active">Wardrobe</button>
-              <button>Occasion</button>
-              <button>Casual</button>
+              <button
+                className={category === "Wardrobe" ? "active" : ""}
+                onClick={() => handleCategoryChange("Wardrobe")}
+              >
+                Wardrobe
+              </button>
+              <button
+                className={category === "Occasion Wear" ? "active" : ""}
+                onClick={() => handleCategoryChange("Occasion Wear")}
+              >
+                Occasion Wear
+              </button>
+              <button
+                className={category === "Casual Wear" ? "active" : ""}
+                onClick={() => handleCategoryChange("Casual Wear")}
+              >
+                Casual Wear
+              </button>
             </div>
           </header>
 
@@ -199,8 +177,8 @@ const ProductPage = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
-                <tr key={product.id}>
+              {filteredProducts.map((product) => (
+                <tr key={product._id}>
                   <td className="product-info">
                     <img
                       src={productimg}
@@ -217,17 +195,17 @@ const ProductPage = () => {
                       View
                     </button>
                   </td>
-                  <td>{product.category}</td>
-                  <td>{product.totalOrders}</td>
-                  <td>{product.totalQty}</td>
+                  <td>{product.categories}</td>
+                  <td>{product.totalOrders || 0}</td>
+                  <td>{product.sizes.reduce((acc, size) => acc + size.quantity, 0)}</td>
                   <td
                     className={`status ${
-                      product.status === "In Stock" ? "in-stock" : "out-of-stock"
+                      product.sizes.some(size => size.quantity > 0) ? "in-stock" : "out-of-stock"
                     }`}
                   >
-                    {product.status}
+                    {product.sizes.some(size => size.quantity > 0) ? "In Stock" : "Out of Stock"}
                   </td>
-                  <td>{product.visits}</td>
+                  <td>{product.visit || 0}</td>
                   <td className="action-buttons">
                     <button className="edit-btn">
                       <img style={{ height: "21px" }} src={pencil} alt="pen" />
@@ -274,7 +252,7 @@ const ProductPage = () => {
                 <span>Fabric:</span> {selectedProduct.fabric}
               </p>
               <p>
-                <span>Category:</span> {selectedProduct.category}
+                <span>Category:</span> {selectedProduct.categories}
               </p>
               <p>
                 <span>Description:</span> {selectedProduct.description}
@@ -285,7 +263,7 @@ const ProductPage = () => {
               {selectedProduct.images.map((image, index) => (
                 <img
                   key={index}
-                  src={detailsimg}
+                  src={image}
                   alt={`Product Image ${index + 1}`}
                 />
               ))}
@@ -447,7 +425,7 @@ const ProductPage = () => {
                         type="radio"
                         value="Wardrobe"
                         checked={category === "Wardrobe"}
-                        onChange={handleCategoryChange}
+                        onChange={() => handleCategoryChange("Wardrobe")}
                         required
                       />
                       Wardrobe
@@ -457,7 +435,7 @@ const ProductPage = () => {
                         type="radio"
                         value="Casual Wear"
                         checked={category === "Casual Wear"}
-                        onChange={handleCategoryChange}
+                        onChange={() => handleCategoryChange("Casual Wear")}
                       />
                       Casual Wear
                     </label>
@@ -466,7 +444,7 @@ const ProductPage = () => {
                         type="radio"
                         value="Occasion Wear"
                         checked={category === "Occasion Wear"}
-                        onChange={handleCategoryChange}
+                        onChange={() => handleCategoryChange("Occasion Wear")}
                       />
                       Occasion Wear
                     </label>
@@ -527,9 +505,9 @@ const ProductPage = () => {
                     required
                   >
                     <option value="">Select Fit</option>
-                    <option value="Slim">Slim Fit</option>
-                    <option value="Regular">Regular Fit</option>
-                    <option value="Loose">Loose Fit</option>
+                    <option value="Slim Fit">Slim Fit</option>
+                    <option value="Regular Fit">Regular Fit</option>
+                    <option value="Loose Fit">Loose Fit</option>
                   </select>
                   <div className="addproduct-form-group">
                     <input

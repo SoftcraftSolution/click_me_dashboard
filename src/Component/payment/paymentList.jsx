@@ -7,6 +7,7 @@ import profileimg from "../../assets/profile.png";
 function ExchangeList() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [activeTab, setActiveTab] = useState("Return Placed");
 
   useEffect(() => {
     axios
@@ -38,6 +39,10 @@ function ExchangeList() {
     setSelectedOrder(null);
   };
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   const renderOrderItems = (items) => {
     return items.map((item, index) => (
       <tr key={index}>
@@ -55,9 +60,9 @@ function ExchangeList() {
             <small>Size - {item.size}</small>
           </div>
         </td>
-        <td>${item.productId.price}</td>
+        <td>Rs{item.productId.price}</td>
         <td>1</td>
-        <td>${item.productId.price}</td>
+        <td>Rs{item.productId.price}</td>
       </tr>
     ));
   };
@@ -66,8 +71,6 @@ function ExchangeList() {
     const { subtotal, deliveryCharge, tax, discount, totalAmount } = calculateSummary(items);
     return (
       <div className="exchange-orderDetails-summary">
-       
-        
         <div className="exchange-reason-section">
           <h3>Reason for exchanging the product?</h3>
           <p>{selectedOrder.reason || "Site is smaller/larger than expected."}</p>
@@ -105,6 +108,21 @@ function ExchangeList() {
       </div>
     </>
   );
+
+  const filteredOrders = orders.filter((order) => {
+    switch (activeTab) {
+      case "Return Placed":
+        return order.exchangeStatus === "return_placed";
+      case "Ordered":
+        return order.exchangeStatus === "ordered";
+      case "Delivered":
+        return order.exchangeStatus === "delivered";
+      case "Cancelled":
+        return order.isCancelled;
+      default:
+        return true;
+    }
+  });
 
   return (
     <div className="exchange-ordersList-container">
@@ -157,11 +175,30 @@ function ExchangeList() {
         <div className="exchange-ordersList">
           <h1>Exchange</h1>
           <div style={{ paddingBottom: "10px" }} className="exchange-ordertabs">
-            <button className="exchange-active">Return Placed</button>
-            <button>Ordered</button>
-            <button>On the Way</button>
-            <button>Delivered</button>
-            <button>Cancelled</button>
+            <button
+              className={activeTab === "Return Placed" ? "exchange-active" : ""}
+              onClick={() => handleTabClick("Return Placed")}
+            >
+              Return Placed
+            </button>
+            <button
+              className={activeTab === "Ordered" ? "exchange-active" : ""}
+              onClick={() => handleTabClick("Ordered")}
+            >
+              Ordered
+            </button>
+            <button
+              className={activeTab === "Delivered" ? "exchange-active" : ""}
+              onClick={() => handleTabClick("Delivered")}
+            >
+              Delivered
+            </button>
+            <button
+              className={activeTab === "Cancelled" ? "exchange-active" : ""}
+              onClick={() => handleTabClick("Cancelled")}
+            >
+              Cancelled
+            </button>
           </div>
           <input
             type="text"
@@ -180,12 +217,12 @@ function ExchangeList() {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <tr key={order._id}>
                   <td onClick={() => handleOrderClick(order)}>{order._id}</td>
                   <td>{new Date(order.arrivalDate).toLocaleString()}</td>
                   <td>{order.productId.name}</td>
-                  <td>${order.productId.price}</td>
+                  <td>Rs{order.productId.price}</td>
                   <td>{order.exchangeStatus}</td>
                   <td>
                     <button className="exchange-deleteButton">✖</button>

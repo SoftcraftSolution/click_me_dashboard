@@ -76,9 +76,9 @@ function OrdersList() {
               <small>Size - {product.size || "N/A"}</small>
             </div>
           </td>
-          <td>${product.price || 0}</td>
+          <td>Rs{product.price || 0}</td>
           <td>{product.quantity || 1}</td>
-          <td>${(product.price || 0) * (product.quantity || 1)}</td>
+          <td>Rs{(product.price || 0) * (product.quantity || 1)}</td>
         </tr>
       ))
     ) : (
@@ -99,19 +99,19 @@ function OrdersList() {
         </div>
         <div className="summary-item">
           <span>Delivery Charges</span>
-          <span>${deliveryCharge}</span>
+          <span>Rs{deliveryCharge}</span>
         </div>
         <div className="summary-item">
           <span>GST and Service Tax</span>
-          <span>${tax.toFixed(2)}</span>
+          <span>Ra{tax.toFixed(2)}</span>
         </div>
         <div className="summary-item">
           <span>Coupon Discount</span>
-          <span>-${discount}</span>
+          <span>-Rs{discount}</span>
         </div>
         <div className="summary-total">
           <span>Total Amount</span>
-          <span>${totalAmount.toFixed(2)}</span>
+          <span>Rs{totalAmount.toFixed(2)}</span>
         </div>
       </div>
     );
