@@ -7,7 +7,16 @@ import profileimg from '../../assets/profile.png';
 function OrdersList() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showDeliveredPopup, setShowDeliveredPopup] = useState(false);
+  const [currentOrderId, setCurrentOrderId] = useState(null);
+  const [courierName, setCourierName] = useState("");
+  const [courierTrackingId, setCourierTrackingId] = useState("");
+  const [courierTrackingLink, setCourierTrackingLink] = useState("");
+  const [activeTab, setActiveTab] = useState("placed"); // Track the active tab
+  const [searchQuery, setSearchQuery] = useState(""); // Track the search query
 
+  // Fetch orders from the backend
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -19,6 +28,7 @@ function OrdersList() {
             customerName: order.username,
             total: order.totalPrice,
             paymentMethod: order.paymentMethod,
+            orderStatus: order.orderStatus || "placed", // Default to "placed" if not provided
             details: {
               products: order.products || [],
               customerDetails: {
@@ -42,6 +52,7 @@ function OrdersList() {
     fetchOrders();
   }, []);
 
+  // Calculate order summary
   const calculateSummary = (products) => {
     const subtotal = products.reduce((sum, product) => sum + (product.price || 0) * (product.quantity || 1), 0);
     const deliveryCharge = 40;
@@ -51,14 +62,115 @@ function OrdersList() {
     return { subtotal, deliveryCharge, tax, discount, totalAmount };
   };
 
+  // Handle order click to show details
   const handleOrderClick = (order) => {
     setSelectedOrder(order);
   };
 
+  // Handle back to orders list
   const handleBackToOrders = () => {
     setSelectedOrder(null);
   };
 
+  // Handle delete/tracking ID click to show popup
+  const handleDeleteClick = (orderId) => {
+    setCurrentOrderId(orderId);
+    setShowPopup(true);
+  };
+
+  // Handle popup form submission
+  const handlePopupSubmit = async () => {
+    try {
+      // Log the request payload and URL
+      console.log("Request URL:", `https://clouthing-ecommerce-backend.vercel.app/user/update-order/${currentOrderId}`);
+      console.log("Request Payload:", {
+        orderStatus: "ontheway",
+        courierName,
+        courierTrackingId,
+        courierTrackingLink,
+      });
+
+      // Send PUT request to update order status
+      const response = await axios.put(
+        `https://clouthing-ecommerce-backend.vercel.app/user/update-order/${currentOrderId}`,
+        {
+          orderStatus: "ontheway",
+          courierName,
+          courierTrackingId,
+          courierTrackingLink,
+        }
+      );
+
+      // Log the response
+      console.log("API Response:", response.data);
+
+      if (response.data.message === "Order updated successfully") {
+        // Update the order status in the local state
+        setOrders(prevOrders =>
+          prevOrders.map(order =>
+            order.id === currentOrderId
+              ? { ...order, orderStatus: "ontheway" }
+              : order
+          )
+        );
+        setShowPopup(false); // Close the popup
+        setActiveTab("ontheway"); // Switch to the "On the Way" tab
+      }
+    } catch (error) {
+      console.error("API Error:", error.response ? error.response.data : error.message);
+      alert("Failed to update order. Please check the console for details.");
+    }
+  };
+
+  // Handle popup close
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  // Handle delivered confirmation popup
+  const handleDeliveredClick = (orderId) => {
+    setCurrentOrderId(orderId);
+    setShowDeliveredPopup(true);
+  };
+
+  // Handle delivered confirmation
+  const handleDeliveredConfirm = async () => {
+    try {
+      // Send PUT request to update order status to "delivered"
+      const response = await axios.put(
+        `https://clouthing-ecommerce-backend.vercel.app/user/update-order/${currentOrderId}`,
+        {
+          orderStatus: "delivered",
+        }
+      );
+
+      // Log the response
+      console.log("API Response:", response.data);
+
+      if (response.data.message === "Order updated successfully") {
+        // Update the order status in the local state
+        setOrders(prevOrders =>
+          prevOrders.map(order =>
+            order.id === currentOrderId
+              ? { ...order, orderStatus: "delivered" }
+              : order
+          )
+        );
+        setShowDeliveredPopup(false); // Close the popup
+        setActiveTab("delivered"); // Switch to the "Delivered" tab
+      }
+    } catch (error) {
+      console.error("API Error:", error.response ? error.response.data : error.message);
+      alert("Failed to update order. Please check the console for details.");
+    }
+  };
+
+  // Handle delivered popup close
+  const handleDeliveredPopupClose = () => {
+    setShowDeliveredPopup(false);
+  };
+
+  // Render product items in the order details table
   const renderProductItems = (products) => {
     return products.length > 0 ? (
       products.map((product, index) => (
@@ -88,6 +200,7 @@ function OrdersList() {
     );
   };
 
+  // Render order summary
   const renderSummary = (products) => {
     const { subtotal, deliveryCharge, tax, discount, totalAmount } = calculateSummary(products);
     return (
@@ -117,6 +230,7 @@ function OrdersList() {
     );
   };
 
+  // Render customer and shipping details
   const renderDetails = (details) => (
     <>
       <div className="orderDetails-customer">
@@ -142,6 +256,17 @@ function OrdersList() {
       </div>
     </>
   );
+
+  // Filter orders by status and search query
+  const filteredOrders = (status) => {
+    return orders
+      .filter(order => order.orderStatus === status)
+      .filter(order =>
+        order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        order.paymentMethod.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+  };
 
   return (
     <div className="ordersList-container">
@@ -184,15 +309,37 @@ function OrdersList() {
         <div className="ordersList">
           <h1>Orders</h1>
           <div style={{ paddingBottom: "10px" }} className="ordertabs">
-            <button className="active">Orders Placed</button>
-            <button>On the Way</button>
-            <button>Delivered</button>
-            <button>Cancelled</button>
+            <button 
+              className={activeTab === "placed" ? "active" : ""} 
+              onClick={() => setActiveTab("placed")}
+            >
+              Orders Placed
+            </button>
+            <button 
+              className={activeTab === "ontheway" ? "active" : ""} 
+              onClick={() => setActiveTab("ontheway")}
+            >
+              On the Way
+            </button>
+            <button 
+              className={activeTab === "delivered" ? "active" : ""} 
+              onClick={() => setActiveTab("delivered")}
+            >
+              Delivered
+            </button>
+            <button 
+              className={activeTab === "cancelled" ? "active" : ""} 
+              onClick={() => setActiveTab("cancelled")}
+            >
+              Cancelled
+            </button>
           </div>
           <input
             type="text"
             className="orderproductsearchbutton"
             placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
           <table className="ordersList-table">
             <thead>
@@ -207,7 +354,7 @@ function OrdersList() {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {filteredOrders(activeTab).map((order) => (
                 <tr key={order.id} >
                   <td onClick={() => handleOrderClick(order)}>{order.id}</td>
                   <td>{order.date}</td>
@@ -215,15 +362,72 @@ function OrdersList() {
                   <td>${order.total}</td>
                   <td>{order.paymentMethod}</td>
                   <td>
-                    <input type="text" placeholder="Enter ID" className="trackingInput" />
+                    <input 
+                      type="text" 
+                      placeholder="Enter ID" 
+                      onClick={() => handleDeleteClick(order.id)} 
+                      className="trackingInput" 
+                    />
                   </td>
                   <td>
-                    <button className="deleteButton">✖</button>
+                    {activeTab === "ontheway" && (
+                      <button 
+                        className="tickButton"
+                        onClick={() => handleDeliveredClick(order.id)}
+                      >
+                        ✔
+                      </button>
+                    )}
+                    <button className="deleteButton" >✖</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Enter Details</h3>
+            <div className="input-row">
+              <input 
+                type="text" 
+                placeholder="Courier Name" 
+                value={courierName}
+                onChange={(e) => setCourierName(e.target.value)}
+              />
+              <input 
+                type="text" 
+                placeholder="Courier Tracking ID" 
+                value={courierTrackingId}
+                onChange={(e) => setCourierTrackingId(e.target.value)}
+              />
+            </div>
+            <div className="input-row">
+              <input 
+                type="text" 
+                placeholder="Courier Tracking Link" 
+                value={courierTrackingLink}
+                onChange={(e) => setCourierTrackingLink(e.target.value)}
+              />
+            </div>
+            <button className="submit-button" onClick={handlePopupSubmit}>Submit</button>
+            <button className="close-button" onClick={handlePopupClose}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {showDeliveredPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Are you sure you want to mark this order as delivered?</h3>
+            <div className="popup-buttons">
+              <button className="submit-button" onClick={handleDeliveredConfirm}>Yes</button>
+              <button className="close-button" onClick={handleDeliveredPopupClose}>No</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
