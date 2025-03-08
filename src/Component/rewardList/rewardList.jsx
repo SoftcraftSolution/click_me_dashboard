@@ -13,7 +13,7 @@ function OrdersList() {
   const [courierName, setCourierName] = useState("");
   const [courierTrackingId, setCourierTrackingId] = useState("");
   const [courierTrackingLink, setCourierTrackingLink] = useState("");
-  const [activeTab, setActiveTab] = useState("placed"); // Track the active tab
+  const [activeTab, setActiveTab] = useState("ordered"); // Track the active tab
   const [searchQuery, setSearchQuery] = useState(""); // Track the search query
 
   // Fetch orders from the backend
@@ -28,7 +28,7 @@ function OrdersList() {
             customerName: order.username,
             total: order.totalPrice,
             paymentMethod: order.paymentMethod,
-            orderStatus: order.orderStatus || "placed", // Default to "placed" if not provided
+            orderStatus: order.orderStatus || "ordered", // Default to "ordered" if not provided
             details: {
               products: order.products || [],
               customerDetails: {
@@ -208,7 +208,7 @@ function OrdersList() {
         <h3>Summary</h3>
         <div className="summary-item">
           <span>Subtotal</span>
-          <span>${subtotal}</span>
+          <span>Rs{subtotal}</span>
         </div>
         <div className="summary-item">
           <span>Delivery Charges</span>
@@ -216,7 +216,7 @@ function OrdersList() {
         </div>
         <div className="summary-item">
           <span>GST and Service Tax</span>
-          <span>Ra{tax.toFixed(2)}</span>
+          <span>Rs{tax.toFixed(2)}</span>
         </div>
         <div className="summary-item">
           <span>Coupon Discount</span>
@@ -310,8 +310,8 @@ function OrdersList() {
           <h1>Orders</h1>
           <div style={{ paddingBottom: "10px" }} className="ordertabs">
             <button 
-              className={activeTab === "placed" ? "active" : ""} 
-              onClick={() => setActiveTab("placed")}
+              className={activeTab === "ordered" ? "active" : ""} 
+              onClick={() => setActiveTab("ordered")}
             >
               Orders Placed
             </button>
@@ -359,7 +359,7 @@ function OrdersList() {
                   <td onClick={() => handleOrderClick(order)}>{order.id}</td>
                   <td>{order.date}</td>
                   <td>{order.customerName}</td>
-                  <td>${order.total}</td>
+                  <td>Rs{order.total}</td>
                   <td>{order.paymentMethod}</td>
                   <td>
                     <input 
